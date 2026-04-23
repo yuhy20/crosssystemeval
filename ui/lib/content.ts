@@ -4,6 +4,17 @@ import matter from "gray-matter";
 
 const ROOT = path.resolve(process.cwd(), "..");
 
+// YAML parses bare dates as JS Date objects. We never want to pass those
+// to React directly — stringify to YYYY-MM-DD. Everything else falls back
+// to `String(value)` so weird types don't crash the render.
+function asString(value: unknown, fallback = ""): string {
+  if (value === undefined || value === null) return fallback;
+  if (value instanceof Date) return value.toISOString().slice(0, 10);
+  if (typeof value === "string") return value;
+  if (typeof value === "number" || typeof value === "boolean") return String(value);
+  return fallback;
+}
+
 export interface LitReviewMeta {
   slug: string;
   title: string;
@@ -31,12 +42,12 @@ export function getLitReviews(): LitReviewMeta[] {
     const raw = fs.readFileSync(path.join(dir, filename), "utf8");
     const { data } = matter(raw);
     return {
-      slug: data.slug,
-      title: data.title,
-      subtitle: data.subtitle,
-      papers: data.papers ?? 0,
-      status: data.status ?? "draft",
-      date: data.date ?? "",
+      slug: asString(data.slug),
+      title: asString(data.title),
+      subtitle: asString(data.subtitle),
+      papers: typeof data.papers === "number" ? data.papers : 0,
+      status: asString(data.status, "draft"),
+      date: asString(data.date),
       filename,
     };
   });
@@ -60,7 +71,7 @@ export function getResearchAgenda(): { content: string; updated: string } {
   if (!fs.existsSync(p)) return { content: "", updated: "" };
   const raw = fs.readFileSync(p, "utf8");
   const { content, data } = matter(raw);
-  return { content, updated: data.date ?? "" };
+  return { content, updated: asString(data.date) };
 }
 
 export function getWorklogs(): Array<{
@@ -82,8 +93,8 @@ export function getWorklogs(): Array<{
     const { data, content } = matter(raw);
     return {
       filename,
-      week: data.week ?? 0,
-      dates: data.dates ?? "",
+      week: typeof data.week === "number" ? data.week : 0,
+      dates: asString(data.dates),
       content,
     };
   });
