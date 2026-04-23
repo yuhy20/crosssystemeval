@@ -1,0 +1,38 @@
+# Environments / secrets
+.env
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+*.egg-info/
+build/
+dist/
+
+# Editors
+.idea/
+.vscode/
+*.swp
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Run outputs (keep the dir via .gitkeep)
+outputs/*.jsonl
+outputs/*.json
+!outputs/.gitkeep
+
+# OS
+.DS_Store

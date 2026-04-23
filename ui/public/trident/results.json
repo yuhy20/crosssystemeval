@@ -1,0 +1,81 @@
+{
+  "generated_at_rows": 5,
+  "rows": [
+    {
+      "cohen_kappa": 1.0,
+      "delta": null,
+      "exact_agreement_pct": 100.0,
+      "judge_a": "claude-sonnet-4-6",
+      "judge_b": "gpt-4o-mini",
+      "n": 30,
+      "observed_mean": 1.033,
+      "pearson_r": 1.0,
+      "published_mean": null,
+      "run": "claude-haiku-4-5_law",
+      "target_model": "claude-haiku-4-5",
+      "verdict": "N/A",
+      "within_tolerance": null
+    },
+    {
+      "cohen_kappa": 0.0,
+      "delta": null,
+      "exact_agreement_pct": 93.3,
+      "judge_a": "claude-sonnet-4-6",
+      "judge_b": "gpt-4o-mini",
+      "n": 30,
+      "observed_mean": 1.033,
+      "pearson_r": null,
+      "published_mean": null,
+      "run": "claude-opus-4-5_law",
+      "target_model": "claude-opus-4-5",
+      "verdict": "N/A",
+      "within_tolerance": null
+    },
+    {
+      "cohen_kappa": 0.0,
+      "delta": null,
+      "exact_agreement_pct": 93.3,
+      "judge_a": "claude-sonnet-4-6",
+      "judge_b": "gpt-4o-mini",
+      "n": 30,
+      "observed_mean": 1.033,
+      "pearson_r": null,
+      "published_mean": null,
+      "run": "claude-sonnet-4-6_law",
+      "target_model": "claude-sonnet-4-6",
+      "verdict": "N/A",
+      "within_tolerance": null
+    },
+    {
+      "cohen_kappa": 0.557,
+      "delta": 0.067,
+      "exact_agreement_pct": 86.7,
+      "judge_a": "gpt-4o",
+      "judge_b": "gpt-4o-mini",
+      "n": 30,
+      "observed_mean": 1.467,
+      "pearson_r": 0.95,
+      "published_mean": 1.4,
+      "run": "gpt-4o-mini_law",
+      "target_model": "gpt-4o-mini",
+      "verdict": "PASS",
+      "within_tolerance": true
+    },
+    {
+      "cohen_kappa": 0.752,
+      "delta": -0.033,
+      "exact_agreement_pct": 93.3,
+      "judge_a": "gpt-4o",
+      "judge_b": "gpt-4o-mini",
+      "n": 30,
+      "observed_mean": 1.367,
+      "pearson_r": 0.967,
+      "published_mean": 1.4,
+      "run": "gpt-4o_law_openai-jury",
+      "target_model": "gpt-4o",
+      "verdict": "PASS",
+      "within_tolerance": true
+    }
+  ],
+  "tolerance": 0.3
+}
