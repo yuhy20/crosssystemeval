@@ -44,10 +44,12 @@ Four bodies of work bound the substantive contribution:
 
 The strongest near-miss — and the work CrossSystemEval most directly extends — is **Wagner et al. (2025, JAMA Network Open)**, which varied user role ("I am a therapist" vs. "teacher" vs. "neighbor") for mandated-reporter scenarios and found role-dependent inconsistency. We extend their methodology from 3 roles in a single reporting domain to 6 roles in a cross-system scenario with an explicit divergence matrix and ICR metric.
 
-Two methodology-layer bodies of work (to be integrated from the pending lit review):
+Four methodology-layer bodies of work ground the paper's scientific rigor. Full annotations in `lit_review/05_methodology.md`; the key commitments we adopt:
 
-- **LLM-as-judge meta-evaluation** (Zheng et al. 2023 MT-Bench, Dubois et al. 2024 AlpacaEval, "Judging the Judges" line of work): characterize when LLM judges agree with humans and document systematic biases we must design around.
-- **Rubric construction and psychometric validation** (Beidas CBT Fidelity Scale line; Moncher & Prinz 1991; Gwet 2014; Landis & Koch 1977): gold-standard methodology for constructing and validating rubric-based instruments in clinical and educational domains.
+- **LLM-as-judge meta-evaluation** (Zheng et al. 2023 MT-Bench; Dubois et al. 2024 length-controlled AlpacaEval; Wang et al. 2023 on positional bias; Panickssery et al. 2024 on self-preference; Thakur et al. 2024 and Gu et al. 2024 surveys of failure modes). We explicitly report position randomization, length distributions per condition, and self-preference controls. κ_judge targets are calibrated against Zheng's 80–85% LLM-human agreement finding.
+- **Rubric construction and psychometric validation** (Moncher & Prinz 1991's adherence/differentiation/competence tripartite; Beidas et al. 2014/2015 CBT Fidelity Scale line; Gwet 2014; Landis & Koch 1977; Jonsson & Svingby 2007 on rubric-training effects; Clauser et al. 2002 on medical-rating psychometrics). Rubric items follow the Moncher & Prinz adherence frame; primary reliability coefficient is Gwet's AC1 (prevalence-robust), secondary is Cohen's κ, interpreted against Landis & Koch bands.
+- **Construct validity in AI benchmarks** (Raji et al. 2021 "Everything in the Whole Wide World Benchmark"; Liang et al. 2023 HELM; Anwar et al. 2024 Foundational Challenges in AI Safety; Blodgett et al. 2021; Ethayarajh & Jurafsky 2020). We open §5 by naming the construct explicitly (Messick 1995 framing via Raji) and report threats to construct validity as a first-class section.
+- **Benchmark construction practice** (Bowman & Dahl NAACL 2021's four criteria; Reuel et al. 2024 BetterBench self-audit; Gebru et al. Datasheets for Datasets; Mitchell et al. Model Cards). The paper includes a Datasheet for the scenarios and a BetterBench self-audit in its appendix.
 
 ## 3. Research Questions
 

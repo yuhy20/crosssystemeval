@@ -2,9 +2,9 @@
 slug: methodology
 title: "Evaluation Methodology Scaffolding for a Benchmark Paper"
 subtitle: "LLM-as-judge validation, rubric psychometrics, construct validity, and benchmark construction"
-papers: 18
+papers: 21
 status: synthesized
-date: 2026-04-18
+date: 2026-04-24
 ---
 
 ## Summary
