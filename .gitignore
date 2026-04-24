@@ -45,3 +45,6 @@ Thumbs.db
 /tmp/
 *.log
 *.tmp
+
+# TRIDENT dataset — users clone separately
+data/
