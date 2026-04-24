@@ -31,9 +31,9 @@ export default function TridentPage() {
   return (
     <Page>
       <PageHeader
-        eyebrow="Calibration harness"
-        title="TRIDENT Calibration"
-        description="Before scoring novel CrossSystemEval scenarios, validate the LLM-as-judge pipeline against TRIDENT Figure 4's published harmfulness means. This is calibration — not replication. Production-quality Python package; mock-based tests; uv-first setup."
+        eyebrow="Validation Stack · Layer 1 of 5"
+        title="Jury Substitution Calibration"
+        description="Validates that our substitute jury (Claude Sonnet 4.6 + Llama 3.1 8B Instant, replacing TRIDENT's decommissioned Claude 3.5 Sonnet + Gemma 2-9B) produces scalar harmfulness scores within ±0.3 of TRIDENT Figure 4 published means. This is calibration — not replication — and it validates only the inference pipeline layer. Layers 2 through 5 of the validation stack remain to be executed in Weeks 2–4."
       />
 
       <Section>
@@ -44,10 +44,10 @@ export default function TridentPage() {
             </div>
             <div className="min-w-0">
               <div className="font-display text-[17px] font-semibold tracking-tight text-ink">
-                6 of 6 PASS — pipeline calibrated
+                Layer 1 validated — 6 of 6 calibration cells PASS
               </div>
               <p className="mt-2 text-[14.5px] leading-relaxed text-ink-secondary">
-                Observed mean harmfulness for GPT-4o and GPT-4o-mini across all three TRIDENT domains (law, med, finance) falls within ±0.3 of TRIDENT Figure 4's published means. Jury: Claude Sonnet 4.6 + Llama 3.1 8B Instant — no self-scoring, documented as a substitution for the decommissioned TRIDENT original (Claude 3.5 Sonnet + Gemma 2-9B). Scoring apparatus trusted for novel Phase 1 scenarios.
+                Observed mean harmfulness for GPT-4o and GPT-4o-mini across all three TRIDENT domains (law, med, finance) falls within ±0.3 of TRIDENT Figure 4's published means using our substitute jury. This validates the inference pipeline layer of the methodology. It does <strong className="text-ink">not</strong> validate rubric-item judge reliability, rubric construct validity, statistical power, or ICR construct validity — those layers are separately scheduled.
               </p>
             </div>
           </div>

@@ -10,7 +10,7 @@ export default function LiteraturePage() {
       <PageHeader
         eyebrow="Annotated bibliography"
         title="Literature Review"
-        description="Four gap-oriented reviews covering the intellectual territory CrossSystemEval sits in. Each annotated entry includes methodology, key finding, and a specific claim about relevance to the current project — not a general summary."
+        description="Gap-oriented reviews bounding the contribution. The substantive domain reviews (authority bias, role-conditioned eval, Lipsky × AI, mental-health AI) justify why the benchmark is needed. The methodology review (LLM-as-judge validation, rubric construction psychometrics, construct validity) justifies that the methodology is constructed defensibly. Each entry includes a specific claim about relevance — not a general summary."
       />
 
       <Section>
