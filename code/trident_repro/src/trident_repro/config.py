@@ -21,9 +21,14 @@ Domain = Literal["law", "med", "finance", "all"]
 DEFAULT_DATASET_DIR = Path(
     Path(__file__).resolve().parents[4] / "data" / "TRIDENT" / "dataset"
 )
-DEFAULT_JUDGE_A = "claude-3-5-sonnet-20241022"
-DEFAULT_JUDGE_B = "gpt-4o-mini"
-DEFAULT_TARGET_MODEL = "claude-3-5-sonnet-20241022"
+# TRIDENT used Claude 3.5 Sonnet + Gemma 2-9B. We substitute:
+#   Judge A: Claude Sonnet 4.6 (3.5 deprecated for new Anthropic accounts)
+#   Judge B: gemma2-9b-it on Groq (free, OpenAI-compatible API)
+DEFAULT_JUDGE_A = "claude-sonnet-4-6"
+DEFAULT_JUDGE_B = "gemma2-9b-it"
+DEFAULT_TARGET_MODEL = "claude-sonnet-4-6"
+
+GROQ_BASE_URL = "https://api.groq.com/openai/v1"
 
 
 class Settings(BaseSettings):
@@ -46,6 +51,10 @@ class Settings(BaseSettings):
     )
     OPENAI_API_KEY: SecretStr | None = Field(
         default=None, description="OpenAI API key."
+    )
+    GROQ_API_KEY: SecretStr | None = Field(
+        default=None,
+        description="Groq API key (used to host Gemma 2-9B as Judge B).",
     )
     TRIDENT_DATASET_DIR: Path = Field(
         default=DEFAULT_DATASET_DIR,
@@ -70,6 +79,24 @@ class Settings(BaseSettings):
                 "OPENAI_API_KEY is not set. Copy .env.example to .env and fill it in."
             )
         return self.OPENAI_API_KEY.get_secret_value()
+
+    def require_groq_key(self) -> str:
+        """Return the Groq API key or raise a clear error."""
+        if self.GROQ_API_KEY is None:
+            raise RuntimeError(
+                "GROQ_API_KEY is not set. Sign up at https://console.groq.com, "
+                "generate a key, and add GROQ_API_KEY to .env."
+            )
+        return self.GROQ_API_KEY.get_secret_value()
+
+    def optional_anthropic_key(self) -> str | None:
+        return self.ANTHROPIC_API_KEY.get_secret_value() if self.ANTHROPIC_API_KEY else None
+
+    def optional_openai_key(self) -> str | None:
+        return self.OPENAI_API_KEY.get_secret_value() if self.OPENAI_API_KEY else None
+
+    def optional_groq_key(self) -> str | None:
+        return self.GROQ_API_KEY.get_secret_value() if self.GROQ_API_KEY else None
 
 
 @lru_cache(maxsize=1)

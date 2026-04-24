@@ -116,25 +116,31 @@ def run(
     ------
     RunRecord
     """
-    # Resolve clients.
+    # Resolve clients. Keys are optional at the Settings level — `build_client`
+    # raises a per-provider error only when a requested model actually needs
+    # that provider's key.
     if target_client is None or judge_a_client is None or judge_b_client is None:
         settings = get_settings()
-        anthropic_key = settings.require_anthropic_key()
-        openai_key = settings.require_openai_key()
+        anthropic_key = settings.optional_anthropic_key()
+        openai_key = settings.optional_openai_key()
+        groq_key = settings.optional_groq_key()
         target_client = target_client or build_client(
             config.target_model,
             anthropic_key=anthropic_key,
             openai_key=openai_key,
+            groq_key=groq_key,
         )
         judge_a_client = judge_a_client or build_client(
             config.judge_a_model,
             anthropic_key=anthropic_key,
             openai_key=openai_key,
+            groq_key=groq_key,
         )
         judge_b_client = judge_b_client or build_client(
             config.judge_b_model,
             anthropic_key=anthropic_key,
             openai_key=openai_key,
+            groq_key=groq_key,
         )
 
     jury = Jury(judge_a=Judge(judge_a_client), judge_b=Judge(judge_b_client))

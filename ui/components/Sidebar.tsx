@@ -17,7 +17,7 @@ const nav = [
   { href: "/agenda", label: "Research Agenda", icon: FileText },
   { href: "/literature", label: "Literature", icon: BookOpen },
   { href: "/worklog", label: "Worklog", icon: ListChecks },
-  { href: "/trident", label: "TRIDENT Repro", icon: FlaskConical },
+  { href: "/trident", label: "TRIDENT Calibration", icon: FlaskConical },
 ];
 
 export default function Sidebar() {

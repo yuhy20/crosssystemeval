@@ -32,8 +32,8 @@ export default function TridentPage() {
     <Page>
       <PageHeader
         eyebrow="Calibration harness"
-        title="TRIDENT Replication"
-        description="Before scoring novel CrossSystemEval scenarios, validate the LLM-as-judge pipeline by replicating TRIDENT's harmfulness score distribution on a 30-prompt subset. Production-quality Python package; mock-based tests; uv-first setup."
+        title="TRIDENT Calibration"
+        description="Before scoring novel CrossSystemEval scenarios, validate the LLM-as-judge pipeline against TRIDENT Figure 4's published harmfulness means. This is calibration — not replication. Production-quality Python package; mock-based tests; uv-first setup."
       />
 
       <Section>
@@ -44,19 +44,22 @@ export default function TridentPage() {
             </div>
             <div className="min-w-0">
               <div className="font-display text-[17px] font-semibold tracking-tight text-ink">
-                Calibration PASSED on both TRIDENT-referenced models
+                6 of 6 PASS — pipeline calibrated
               </div>
               <p className="mt-2 text-[14.5px] leading-relaxed text-ink-secondary">
-                Harness mean harmfulness scores agreed with TRIDENT Figure 4 to within ±0.1 on GPT-4o and GPT-4o-mini — well inside the ±0.3 calibration tolerance. Three Claude 4.x models baselined without a TRIDENT reference (observed-only).
+                Observed mean harmfulness for GPT-4o and GPT-4o-mini across all three TRIDENT domains (law, med, finance) falls within ±0.3 of TRIDENT Figure 4's published means. Jury: Claude Sonnet 4.6 + Llama 3.1 8B Instant — no self-scoring, documented as a substitution for the decommissioned TRIDENT original (Claude 3.5 Sonnet + Gemma 2-9B). Scoring apparatus trusted for novel Phase 1 scenarios.
               </p>
             </div>
           </div>
         </SoftCard>
       </Section>
 
-      <Section title="Results (law domain, n=30, seed=42)">
+      <Section title="Results (n=30 target, seed=42, ±0.3 tolerance)">
         <div className="animate-fade-up-delay-2 space-y-5">
           <ResultsTable />
+          <p className="text-[12px] leading-relaxed text-ink-muted">
+            <strong className="text-ink-secondary">κ<sub>judge</sub> / r<sub>judge</sub></strong>: inter-judge agreement between Judge A and Judge B scores on the same responses. Validates that the two-model jury produces consistent ratings (upstream pipeline QA). Distinct from <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-[11.5px]">κ_human</code> (Phase 1 rubric validation) and <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-[11.5px]">r_H2</code> (discriminant test between ICR and sycophancy). Some runs have n&lt;30 due to Groq free-tier rate limiting — partial-failure resilience kept the remaining records clean rather than aborting the run.
+          </p>
           <SoftCard className="p-3">
             <Image
               src="/trident/calibration_chart.png"
@@ -68,10 +71,52 @@ export default function TridentPage() {
             />
           </SoftCard>
           <p className="text-[12.5px] leading-relaxed text-ink-muted">
-            Chart regenerated from <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-[11.5px] text-ink-secondary">code/trident_repro/outputs/*.jsonl</code> via{" "}
-            <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-[11.5px] text-ink-secondary">python scripts/render_results.py</code>. Re-run after any new calibration to refresh this page.
+            Chart regenerated from <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-[11.5px] text-ink-secondary">code/trident_repro/outputs/clean_*.jsonl</code> via{" "}
+            <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-[11.5px] text-ink-secondary">python scripts/render_results.py</code>.
           </p>
         </div>
+      </Section>
+
+      <Section title="Jury substitution trail">
+        <SoftCard className="animate-fade-up-delay-3">
+          <p className="mb-4 text-[14.5px] leading-relaxed text-ink-secondary">
+            TRIDENT used Claude 3.5 Sonnet + Gemma 2-9B. Neither is accessible on our stack. We substitute in-spirit:
+          </p>
+          <div className="overflow-hidden rounded-lg ring-1 ring-inset ring-ink-hairline/60">
+            <table className="w-full text-left text-[13px]">
+              <thead className="bg-surface-muted text-[11px] font-semibold uppercase tracking-[0.08em] text-ink-muted">
+                <tr>
+                  <th className="px-4 py-2">Role</th>
+                  <th className="px-4 py-2">TRIDENT</th>
+                  <th className="px-4 py-2">Ours</th>
+                  <th className="px-4 py-2">Rationale</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-ink-hairline/50">
+                  <td className="px-4 py-3 text-ink font-mono text-[12px]">Judge A</td>
+                  <td className="px-4 py-3 text-ink-muted font-mono text-[12px]">claude-3-5-sonnet</td>
+                  <td className="px-4 py-3 text-ink font-mono text-[12px]">claude-sonnet-4-6</td>
+                  <td className="px-4 py-3 text-ink-secondary">3.5 deprecated on new Anthropic accounts; 4.6 is same-vendor flagship</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 text-ink font-mono text-[12px]">Judge B</td>
+                  <td className="px-4 py-3 text-ink-muted font-mono text-[12px]">gemma-2-9b</td>
+                  <td className="px-4 py-3 text-ink font-mono text-[12px]">llama-3.1-8b-instant</td>
+                  <td className="px-4 py-3 text-ink-secondary">Gemma 2-9B decommissioned by Groq. Llama 3.1 8B is closest open-weight substitute (~8B params, non-Anthropic/non-OpenAI)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-4 text-[13px] leading-relaxed text-ink-muted">
+            <strong className="text-ink-secondary">Calibration, not replication.</strong> We validate that our pipeline produces
+            TRIDENT-consistent harmfulness scores on reference models (GPT-4o, GPT-4o-mini) within ±0.3 tolerance. We do
+            not reproduce TRIDENT's full 19-model study — most of their domain-specialized targets (DISC-LawLLM, Meditron,
+            Saul-7B, FinGPT, etc.) are not hosted by any accessible inference provider and would require self-hosted GPU
+            infrastructure. A strict replication is out of scope; our research question is about novel cross-system
+            scenarios, not reproduction of TRIDENT findings.
+          </p>
+        </SoftCard>
       </Section>
 
       <Section title="Run it">

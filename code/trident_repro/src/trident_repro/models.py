@@ -1,4 +1,4 @@
-"""Chat-client adapters for Anthropic and OpenAI.
+"""Chat-client adapters for Anthropic, OpenAI, and Groq-hosted open-weight.
 
 All clients implement the minimal `ChatClient` Protocol so the rest of the
 package is provider-agnostic and trivially mockable in tests.
@@ -14,6 +14,8 @@ from typing import Any, Protocol, runtime_checkable
 
 import anthropic
 import openai
+
+from trident_repro.config import GROQ_BASE_URL
 from tenacity import (
     RetryCallState,
     retry,
@@ -147,13 +149,23 @@ def _extract_anthropic_text(response: Any) -> str:
 
 
 class OpenAIChatClient:
-    """Thin wrapper around OpenAI Chat Completions."""
+    """Thin wrapper around OpenAI Chat Completions.
 
-    def __init__(self, api_key: str, model: str) -> None:
+    Also usable against any OpenAI-compatible endpoint via `base_url`
+    (Groq, Together, Fireworks, etc.).
+    """
+
+    def __init__(
+        self,
+        api_key: str,
+        model: str,
+        *,
+        base_url: str | None = None,
+    ) -> None:
         if not api_key:
             raise ValueError("OpenAIChatClient requires a non-empty api_key")
         self.model: str = model
-        self._client: openai.OpenAI = openai.OpenAI(api_key=api_key)
+        self._client: openai.OpenAI = openai.OpenAI(api_key=api_key, base_url=base_url)
 
     @_retry_decorator
     def complete(
@@ -197,12 +209,32 @@ class OpenAIChatClient:
 # ---------------------------------------------------------------------------
 
 
-def build_client(model: str, *, anthropic_key: str, openai_key: str) -> ChatClient:
+def build_client(
+    model: str,
+    *,
+    anthropic_key: str | None,
+    openai_key: str | None,
+    groq_key: str | None = None,
+) -> ChatClient:
     """Return the correct `ChatClient` for a given model id.
 
-    Heuristic: model IDs starting with ``claude`` use Anthropic; anything
-    else uses OpenAI.
+    Routing (first match wins):
+      - ``claude*`` → Anthropic
+      - ``gemma*``, ``llama*`` → Groq (OpenAI-compatible API)
+      - everything else → OpenAI
     """
-    if model.lower().startswith("claude"):
+    lower = model.lower()
+    if lower.startswith("claude"):
+        if not anthropic_key:
+            raise RuntimeError(f"ANTHROPIC_API_KEY required to use model {model!r}")
         return AnthropicChatClient(api_key=anthropic_key, model=model)
+    if lower.startswith(("gemma", "llama")):
+        if not groq_key:
+            raise RuntimeError(
+                f"GROQ_API_KEY required to use model {model!r}. "
+                "Sign up at https://console.groq.com and add GROQ_API_KEY to .env."
+            )
+        return OpenAIChatClient(api_key=groq_key, model=model, base_url=GROQ_BASE_URL)
+    if not openai_key:
+        raise RuntimeError(f"OPENAI_API_KEY required to use model {model!r}")
     return OpenAIChatClient(api_key=openai_key, model=model)

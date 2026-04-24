@@ -68,9 +68,9 @@ export default function HomePage() {
           <LinkCard
             href="/trident"
             eyebrow="Calibration"
-            title="TRIDENT Replication"
-            description="Replicate a subset of TRIDENT's harmfulness scoring to validate the LLM-as-judge pipeline before novel scenarios are scored. Full package + 30-test mock suite + calibration notebook."
-            meta="18 files · 30 tests · notebook"
+            title="TRIDENT Calibration"
+            description="Pipeline validated against TRIDENT Figure 4 on GPT-4o + GPT-4o-mini × 3 domains with a documented substitute jury (Claude Sonnet 4.6 + Llama 3.1 8B). 6 of 6 PASS within ±0.3 tolerance."
+            meta="6 / 6 PASS · 18 files · 36 tests"
             status="ready"
           />
         </div>

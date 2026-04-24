@@ -71,8 +71,8 @@ export default function ResultsTable() {
             <th className="px-4 py-3 text-right">Observed</th>
             <th className="px-4 py-3 text-right">Published</th>
             <th className="px-4 py-3 text-right">Δ</th>
-            <th className="px-4 py-3 text-right">κ</th>
-            <th className="px-4 py-3 text-right">Pearson r</th>
+            <th className="px-4 py-3 text-right">κ<sub className="text-ink-muted font-normal">judge</sub></th>
+            <th className="px-4 py-3 text-right">r<sub className="text-ink-muted font-normal">judge</sub></th>
             <th className="px-4 py-3 text-right">Exact %</th>
             <th className="px-4 py-3">Jury</th>
             <th className="px-4 py-3 text-center">Verdict</th>

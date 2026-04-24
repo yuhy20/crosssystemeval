@@ -115,9 +115,42 @@ Rationale: 3 providers, 2 sizes within Anthropic and OpenAI, 1 open-weight. Comp
 
 ### 5.4 Scoring Pipeline
 
-- **LLM-as-judge jury** (per TRIDENT methodology): Claude 3.5 Sonnet + GPT-4o-mini (substituting for Gemma 2-9B in original paper; chosen as members of the tested set with documented divergent training). Scores averaged.
-- **Calibration:** judge infrastructure validated against TRIDENT's reported harmfulness score distribution on a 30-prompt subset before Phase 1 scenarios are scored. Target: mean harmfulness within ±0.3 of published per-model score.
-- **Inter-rater reliability:** for a subset of responses, 2 human annotators (ideally domain experts) score the same items; Cohen's κ reported.
+#### Jury composition (substitution, not replication)
+
+TRIDENT (§5.1.2) used Claude 3.5 Sonnet + Gemma 2-9B as the judge jury, chosen to "reduce overlap with the evaluated models and increase diversity in rating style." Neither model is accessible to us:
+- Claude 3.5 Sonnet is not available on new Anthropic accounts (tier-1 restriction).
+- Gemma 2-9B was decommissioned by Groq, our access path for free open-weight inference.
+
+We substitute each with the closest in-spirit available model:
+
+| Role | TRIDENT original | Our substitute | Rationale |
+|---|---|---|---|
+| Judge A | Claude 3.5 Sonnet | **Claude Sonnet 4.6** | Same vendor, same "flagship Anthropic" role |
+| Judge B | Gemma 2-9B | **Llama 3.1 8B Instant** (Groq) | Similar parameter class (~8B), also open-weight, also from a non-Anthropic/non-OpenAI vendor — preserves TRIDENT's "diversity in rating style" intent |
+
+This is disclosed as a methodology deviation in all published results.
+
+#### Calibration, not replication
+
+The pipeline is validated against TRIDENT's published means (Figure 4) via **calibration** on GPT-4o + GPT-4o-mini across all three domains (law, med, finance), n=30 per cell, seed=42. This is explicitly **not** a replication of TRIDENT's full 19-target study, which is out of scope for several reasons:
+
+1. Many TRIDENT targets (domain-specialized models like DISC-LawLLM, Meditron, Saul-7B, FinGPT) are not hosted by any provider accessible to us on current tooling, and would require self-hosting each on dedicated GPU infrastructure.
+2. A strict replication is not the research question. Our question is whether LLMs maintain cross-system professional-standard fidelity — which requires trustworthy scoring on **novel** scenarios, not reproduction of TRIDENT's findings.
+3. The calibration criterion (|observed − published| ≤ 0.3 on reference models) is sufficient to establish that the scoring apparatus is accurately graduated for novel measurements.
+
+**Success criterion met**: all 6 calibration cells (2 models × 3 domains) fall within ±0.3 of TRIDENT published means with our substitute jury. The scoring pipeline is calibrated.
+
+#### Inter-rater / inter-judge agreement — same metric names, different uses
+
+Cohen's κ and Pearson r appear in three distinct places with three distinct meanings. They should be labeled accordingly in all artifacts:
+
+| Context | Notation | Compares | Answers |
+|---|---|---|---|
+| TRIDENT calibration | κ_judge, r_judge | Judge A vs Judge B scores on the same responses | Is the jury internally consistent? |
+| Phase 1 rubric validation | κ_human | Two human annotators on rubric items (subset) | Are our rubrics objective enough for independent experts to agree? |
+| H2 discriminant test | r_H2 | A model's ICR vs its sycophancy rate across scenarios | Is standard bleed distinct from sycophancy? |
+
+The first is a pipeline-quality signal (upstream). The second validates rubric construction (upstream). The third is a research finding (downstream).
 
 ### 5.5 Primary Metrics
 
