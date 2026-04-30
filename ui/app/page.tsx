@@ -9,7 +9,7 @@ export default function HomePage() {
   return (
     <Page>
       <PageHeader
-        eyebrow="Benchmark proposal · Sprint Week 1 of 5"
+        eyebrow="Benchmark proposal · Sprint Week 2 of 5"
         title="CrossSystemEval"
         description="A benchmark methodology for measuring whether LLMs maintain role-appropriate professional-standard fidelity when the same factual scenario is framed from different professional perspectives. Primary contribution is methodological (evaluation unit, rubric-item scoring, Inappropriate Convergence Rate metric); pilot empirical study on NY Kendra's Law is demonstrative."
       />
@@ -29,12 +29,12 @@ export default function HomePage() {
           <Stat
             label="Lit reviews"
             value={reviews.length}
-            hint={`${paperCount} papers annotated`}
+            hint={`${paperCount} verified papers`}
           />
           <Stat
-            label="Anchor scenario"
-            value="NY MHL §9.60"
-            hint="Kendra's Law (Phase 1)"
+            label="Scenario v1"
+            value="§9.60"
+            hint="Family-petitioner pathway"
           />
         </div>
       </Section>
@@ -62,7 +62,7 @@ export default function HomePage() {
             eyebrow="Weekly diary"
             title="Worklog"
             description="Decisions, open questions, risks, and changes-of-mind as the sprint progresses. Explicit trail of methodological drift and corrections."
-            meta="Week 1 · ~12 hrs logged"
+            meta="Week 2 in progress · scenario v1 drafted"
             status="draft"
           />
           <LinkCard
@@ -96,9 +96,15 @@ export default function HomePage() {
             grounded in codified professional standards, with{" "}
             <strong className="text-ink">Inappropriate Convergence Rate (ICR)</strong>{" "}
             as the primary metric. The methodology is the contribution. A pilot
-            empirical study on NY Kendra's Law (MHL §9.60) demonstrates that
-            the instrument produces measurable differentiation across 6
-            frontier LLMs.
+            empirical study on NY Kendra's Law (MHL §9.60) is{" "}
+            <strong className="text-ink">scheduled for sprint Weeks 2–4</strong>{" "}
+            across a confirmed lineup of 5 frontier LLMs (Claude Sonnet 4.6,
+            Claude Haiku 4.5, GPT-4o, GPT-4o-mini, Llama 3.3 70B) plus one
+            conditional sixth slot. As of Week 2 mid-sprint, scenario v1
+            (family-petitioner pathway) has been drafted with all six role
+            analyses; rubric items and inference runs are still ahead. Only
+            Layer 1 of the 5-layer validation stack (inference pipeline
+            calibration against TRIDENT) has been validated to date.
           </p>
         </SoftCard>
       </Section>
@@ -148,38 +154,50 @@ export default function HomePage() {
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           <SoftCard className="animate-fade-up-delay-3">
             <div className="text-[11px] font-semibold uppercase tracking-[0.08em] text-accent">
-              Framing correction
+              Lit review 04 rebuilt — verification-mandatory
             </div>
             <p className="mt-2 text-[14.5px] leading-relaxed text-ink-secondary">
-              Project reframed from an <em>eval paper</em> to a{" "}
-              <em>benchmark proposal paper with pilot empirical study</em>. Primary
-              contribution is the methodology (scenario format, rubric-item
-              scoring, ICR metric, divergence matrix). Pilot findings demonstrate
-              the instrument; they are not the scientific claim.
+              Mental-health AI evals review re-run with verification-mandatory
+              subagent: every URL personally fetched. Outcome — 20 verified
+              papers (14 primary + 6 methodological precedent), 7 confabulated
+              citations confirmed not to exist. Most importantly,{" "}
+              <strong className="text-ink">Wagner et al. 2025 (JAMA on mandated-reporter role-framing)</strong>{" "}
+              does not exist; the Week 1 agenda used it as the load-bearing
+              near-miss for the contribution claim. Replaced with verified
+              precedents (Liang 2510.24677, MHSafeEval 2604.17730, AgentClinic
+              2405.07960) and three new contribution claims.
             </p>
           </SoftCard>
           <SoftCard className="animate-fade-up-delay-3">
             <div className="text-[11px] font-semibold uppercase tracking-[0.08em] text-accent">
-              TRIDENT relationship, precisely
+              Setup B + no-claim baseline locked in
             </div>
             <p className="mt-2 text-[14.5px] leading-relaxed text-ink-secondary">
-              TRIDENT is the methodological ancestor, not the technical parent.
-              We inherit the stance (evaluate AI safety against codified
-              professional standards) and the jury architecture; we do not
-              inherit pipeline, metric, or failure mode. TRIDENT calibration
-              enters the validation stack at Layer 1 only.
+              Phase 1 commits to{" "}
+              <strong className="text-ink">Setup B</strong> (AI serves a user
+              who claims a role) plus a no-claim baseline. Setup A (AI plays the
+              role via system prompt) is deferred to Phase 2. Three reasons:
+              deployment-volume mismatch (Setup B is the dominant deployment
+              shape), standard-bleed observability (Setup B's bleed is directly
+              in the response), and verified-literature gap (Liang 2510.24677
+              and the role-eval cluster are Setup-A; Setup B is comparatively
+              under-studied).
             </p>
           </SoftCard>
           <SoftCard className="animate-fade-up-delay-3">
             <div className="text-[11px] font-semibold uppercase tracking-[0.08em] text-accent">
-              Jury substitution, defended
+              Scenario v1 drafted — family-petitioner pathway
             </div>
             <p className="mt-2 text-[14.5px] leading-relaxed text-ink-secondary">
-              TRIDENT's original jury (Claude 3.5 Sonnet + Gemma 2-9B) is
-              inaccessible on our stack (new-account restriction; Groq
-              decommissioning). Substituted with Claude Sonnet 4.6 + Llama 3.1
-              8B Instant. Substitution validated at Layer 1 via 6 PASS cells
-              across GPT-4o / GPT-4o-mini × law / med / finance.
+              §9.60 anchor scenario v1 written:{" "}
+              <em>family-petitioner pathway with prior §9.41 officer contact</em>.
+              Selected over emergency-hold (officer-physician dyad dominates)
+              and two-physician certification (removes officer + judge). Shared
+              fact pattern + all six role analyses (patient / family / treating
+              psychiatrist / CIT officer / LCSW / judge), each with codified
+              standards and standard-bleed risks. Statutory verification
+              against Westlaw / NY Senate codified text still pending before
+              pilot.
             </p>
           </SoftCard>
           <SoftCard className="animate-fade-up-delay-3">
@@ -188,10 +206,12 @@ export default function HomePage() {
             </div>
             <p className="mt-2 text-[14.5px] leading-relaxed text-ink-secondary">
               Layers 2 (rubric-item judge reliability) and 5 (construct
-              validity) are the load-bearing validation steps and remain
-              unexecuted. Sprint weeks 3 and 4 are allocated to them
-              respectively. Without Layer 2 evidence, the pilot empirical
-              findings in §6.2 cannot be trusted.
+              validity) remain unexecuted; sprint Weeks 3 and 4 are allocated
+              to them. The §9.60 statutory text in scenario v1 is drawn from
+              summary sources (Wikipedia, public.law); direct-statute
+              verification is queued for Wed 4/30 before rubric-item drafting
+              begins. If §9.60(e) categories or §9.60(c) prongs differ from
+              summaries, the scenario may need adjustment.
             </p>
           </SoftCard>
         </div>

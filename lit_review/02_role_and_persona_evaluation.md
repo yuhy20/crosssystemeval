@@ -3,9 +3,11 @@ slug: role-persona-eval
 title: "Role-Conditioned & Persona-Based LLM Evaluation"
 subtitle: "Beyond PersoBench and ELEPHANT — who else tests cross-role differentiation?"
 papers: 10
-status: synthesized
+status: candidate citations — verification required before paper submission
 date: 2026-04-22
 ---
+
+> **Verification status (added 2026-04-27).** None of the 10 entries in this review have been verified against arxiv listings or publisher sites. The originating subagent operated from training-time search results. Treat as a candidate-citation list, not as established sources. Particularly load-bearing for the agenda's "novelty gap" argument: U-SafeBench (entry #5) as the cell-structure precedent; Modeling Motivated Reasoning in Law (entry #2) as the closest cross-role-with-divergence analog; Liang et al. on neuron ablation (entry #3) as the mechanistic null-hypothesis threat. Verify before citing in the paper.
 
 ## Summary
 

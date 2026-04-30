@@ -3,9 +3,11 @@ slug: authority-bias
 title: "Authority & Expertise Bias in LLMs"
 subtitle: "Does a user's claimed social power change how LLMs respond?"
 papers: 10
-status: synthesized
+status: candidate citations — partial verification
 date: 2026-04-22
 ---
+
+> **Verification status (added 2026-04-27).** ELEPHANT (Cheng et al. 2025, arxiv 2505.13995) entry #10 has been verified by direct PDF read. The other 9 entries cite arxiv IDs from subagent training-time search and have not been verified against arxiv listings. Author attribution for the "Overalignment in Frontier LLMs" paper (entry #1, arxiv 2601.18334) is in conflict with subagent output elsewhere in this project (Bhatia vs. Christophe) — the primary source has not been read. Entry #2 ("Anonymous, User-Assistant Bias in LLMs") cites a paper with no listed authors; either find the real attribution or remove from any citing artifact.
 
 ## Summary
 

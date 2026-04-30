@@ -3,9 +3,11 @@ slug: street-level-bureaucracy
 title: "Street-Level Bureaucracy × AI"
 subtitle: "Operationalizing Lipsky's framework for algorithmic systems"
 papers: 10
-status: synthesized
+status: candidate citations — verification recommended
 date: 2026-04-22
 ---
+
+> **Verification status (added 2026-04-27).** Lipsky (1980/2010) is foundational and citable as-is. Alkhatib & Bernstein 2019 (CHI) and Vredenburgh 2023 (Inquiry) are real papers I am moderately confident in but have not read directly during this project. The remaining entries (Saxena, Bovens & Zouridis, Bullock, Ranerup, Gillingham, Peeters, Medaglia, Binns) cite specific journal venues from subagent search and have not been verified. The "first computational benchmark operationalizing Lipsky" framing in the research agenda depends on this review's gap analysis; if any of the cited papers turns out to be a closer precedent than represented, the framing will need revision.
 
 ## Summary
 

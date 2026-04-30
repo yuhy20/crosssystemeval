@@ -3,9 +3,13 @@ slug: methodology
 title: "Evaluation Methodology Scaffolding for a Benchmark Paper"
 subtitle: "LLM-as-judge validation, rubric psychometrics, construct validity, and benchmark construction"
 papers: 21
-status: synthesized
-date: 2026-04-24
+status: synthesized — partially superseded by review 06 on reliability statistics
+date: 2026-04-23
 ---
+
+> **Errata note added 2026-04-27.** This review's recommendation that **Gwet's AC1 be the primary reliability coefficient** is superseded by review 06 (`06_rubric_fidelity_recent.md`), which surveyed the post-2018 clinical-fidelity field and found that **ICC (intraclass correlation) is the modern default for continuous rubric scores**, with AC1 reserved for categorical items where prevalence is extreme and Cohen's κ as a secondary reported value. The research agenda's §2 and §4 reflect the corrected 06 stance. Other recommendations in this review (Bowman & Dahl four criteria; Datasheet + Model Cards in appendix; LLM-as-judge bias controls) stand.
+
+> **Verification note.** All arxiv IDs and DOIs in this review were generated from the subagent's training-time knowledge and were not live-verified against arxiv listings or publisher sites. Several IDs are plausible but unconfirmed (notably the 2024 surveys at 2411.15594 and 2411.12990). Before submitting to a venue, every citation must be re-verified against the primary source.
 
 ## Summary
 

@@ -10,7 +10,7 @@ status: draft — Layers 2-5 of validation stack remain to be executed in Weeks 
 
 ## 1. Contribution and Scope
 
-**We propose CrossSystemEval, a benchmark methodology for measuring whether large language models maintain role-appropriate professional-standard fidelity when the same factual scenario is framed from different professional perspectives.** The primary contribution is *methodological*: we define a novel evaluation unit (R × R role-pair divergence given a shared fact pattern), a novel scoring methodology (rubric-item judgments grounded in codified professional standards), and a novel metric (Inappropriate Convergence Rate) for a previously unmeasured failure mode we call *standard bleed*. Empirical application of the benchmark is secondary: we report pilot findings from one anchor scenario (NY involuntary psychiatric commitment under MHL §9.60, Kendra's Law) across six frontier LLMs as proof that the methodology produces measurable differentiation between models.
+**We propose CrossSystemEval, a benchmark methodology for measuring whether large language models maintain role-appropriate professional-standard fidelity when the same factual scenario is framed from different professional perspectives.** The primary contribution is *methodological*: we define a novel evaluation unit (R × R role-pair divergence given a shared fact pattern), a novel scoring methodology (rubric-item judgments grounded in codified professional standards), and a novel metric (Inappropriate Convergence Rate) for a previously unmeasured failure mode we call *standard bleed*. Empirical application of the benchmark is a *planned* pilot study (Weeks 2–4 of the sprint): one anchor scenario (NY involuntary psychiatric commitment under MHL §9.60, Kendra's Law) applied to a target lineup of 5 confirmed frontier LLMs (Claude Sonnet 4.6, Claude Haiku 4.5, GPT-4o, GPT-4o-mini, Llama 3.3 70B) plus one conditional sixth model contingent on access. As of this draft, **no CrossSystemEval scenario has yet been scored** — Week 1 completed only the inference-pipeline calibration (Layer 1 of the validation stack, §4), which uses TRIDENT prompts and is not a CrossSystemEval scenario run.
 
 This is a **benchmark proposal paper with a pilot empirical study**, not an empirical-findings paper. A faculty reader should expect:
 
@@ -20,7 +20,7 @@ This is a **benchmark proposal paper with a pilot empirical study**, not an empi
 
 ### Field positioning
 
-CrossSystemEval sits in the **behavioral / deployment safety** sub-area of AI safety — the same sub-area as ELEPHANT (Cheng et al., 2025), SycEval (Fanous et al., 2025), Overalignment in Healthcare (Bhatia et al., 2026), Wagner et al. 2025 on mandated-reporter role variation, and Anthropic's *Values in the Wild* (2025). It does not contribute to alignment-in-internals, adversarial robustness, or catastrophic-risk research. It is explicitly included in BlueDot's Technical AI Safety Project Sprint as in-scope.
+CrossSystemEval sits in the **behavioral / deployment safety** sub-area of AI safety — the same sub-area as ELEPHANT (Cheng et al., 2025), SycEval (Fanous et al., 2025), Overalignment in Healthcare (Bhatia et al., 2026), MHSafeEval (Lee et al., 2026), and Anthropic's *Values in the Wild* (2025). It does not contribute to alignment-in-internals, adversarial robustness, or catastrophic-risk research. It is explicitly included in BlueDot's Technical AI Safety Project Sprint as in-scope.
 
 ### Relationship to TRIDENT
 
@@ -33,16 +33,16 @@ The novel research question — *does the model apply role-appropriate standards
 
 ## 2. Related Work
 
-*[Methodology literature review ongoing — methodology cluster being compiled. Substantive-domain clusters already written at `lit_review/0{1,2,3,4}_*.md`. Synthesis to be integrated in next revision.]*
+> **Verification note for this section.** Several citations to 2025–2026 preprints in this section originate from background lit-review searches whose subagents disclaimed verification of exact arxiv IDs and author attribution. Until each is re-verified against the primary source, every citation tagged `[unverified]` should be treated as a *candidate* citation that may need replacement, not an established source. Items marked `[verified]` were read directly during this project.
 
 Four bodies of work bound the substantive contribution:
 
-- **Domain-specific LLM safety benchmarks** (TRIDENT, PAS, CounselBench, PsychiatryBench, SycoEval-EM): ground safety evaluation in codified professional codes. Single-role, single-domain refusal is the standard unit.
-- **Pairwise / counterfactual LLM evaluation** (ELEPHANT, SycEval, Kempermann et al., Overalignment in Healthcare, U-SafeBench, Wagner et al. 2025, counterfactual fairness literature): establish the methodology for expected-divergence measurement, with 2-condition designs predominating.
-- **Persona / role consistency** (PersoBench, LIFECHOICE): measure fidelity to a single persona, not cross-persona differentiation.
-- **Street-level bureaucracy and social power theory** (Lipsky 1980/2010; Alkhatib & Bernstein 2019; Vredenburgh 2023; French & Raven 1959): social-science frameworks for front-line discretion and role authority, underapplied to AI evaluation.
+- **Domain-specific LLM safety benchmarks**: TRIDENT (Hui et al. 2025, arxiv 2507.21134) `[verified]` grounds safety evaluation in codified professional codes (ABA / CFA / AMA), with single-role, single-domain refusal as its standard unit. Adjacent mental-health-domain benchmarks PsychiatryBench (Fouda et al. 2025, arxiv 2509.09711) `[verified]`, PsychBench (Liu et al. 2025, arxiv 2503.01903) `[verified]`, and CounselBench (Li et al. 2025, arxiv 2506.08584) `[verified]` cover psychiatric clinical / diagnostic QA but not commitment statutes or cross-role variation. PAS and SycoEval-EM remain `[unverified]`.
+- **Pairwise / counterfactual LLM evaluation**: ELEPHANT (Cheng et al. 2025, arxiv 2505.13995) `[verified]` establishes pairwise sycophancy measurement on the AITA-NTA-FLIP design. Adjacent works — SycEval, Kempermann et al., the "Overalignment in Healthcare" paper at arxiv 2601.18334, U-SafeBench, counterfactual fairness work — were surfaced via the cluster reviews `[unverified]`. Author attribution for the Overalignment paper is currently in conflict between subagent outputs (one called it "Christophe et al.", another "Bhatia et al."); needs primary-source verification before citation.
+- **Persona / role consistency**: PersoBench, LIFECHOICE `[unverified]` — measure fidelity to a single persona, not cross-persona differentiation.
+- **Street-level bureaucracy and social power theory**: Lipsky (1980/2010) `[verified-as-foundational]`; Alkhatib & Bernstein 2019 (CHI), Vredenburgh 2023 (Inquiry), French & Raven 1959 `[needs primary-source check before citation; titles/venues in lit review 03]`.
 
-The strongest near-miss — and the work CrossSystemEval most directly extends — is **Wagner et al. (2025, JAMA Network Open)**, which varied user role ("I am a therapist" vs. "teacher" vs. "neighbor") for mandated-reporter scenarios and found role-dependent inconsistency. We extend their methodology from 3 roles in a single reporting domain to 6 roles in a cross-system scenario with an explicit divergence matrix and ICR metric.
+A frequently-cited candidate "near-miss" — **"Wagner et al. (2025, JAMA Network Open)"**, varying user role ("therapist" vs. "teacher" vs. "neighbor") for mandated-reporter scenarios — was surfaced in early subagent searches but **confirmed not to exist** during the 2026-04-27 verification pass against PubMed, JAMA Network Open, and arxiv. The strongest verified mental-health-AI precedents are: (a) **Liang et al. 2025 (arxiv 2510.24677)** [verified], which uses neuronal ablation to show that prompt-based clinical role-playing changes surface-level linguistic features but leaves underlying reasoning pathways unchanged across attending / resident / student conditions — directly motivating CrossSystemEval (current role conditioning is shallow) and warning it (LLMs may collapse all six professional roles to the same answer); (b) **MHSafeEval (Lee et al. 2026, arxiv 2604.17730)** [verified], the closest published "role-aware" mental-health safety taxonomy, though its "role" axis denotes the harm-role the *AI counselor* takes (perpetrator / instigator / facilitator / enabler), not the *user's* professional role; (c) **AgentClinic (Schmidgall et al. 2024, arxiv 2405.07960)** [verified], which embeds biases across patient / doctor / measurement / moderator agents and shows >10× accuracy drops — closest design-pattern precedent for measuring degradation under role manipulation. The combined position: cross-role mental-health LLM evaluation in which the *user's professional role* varies on the same statutory commitment scenario is, after a verification-mandatory rebuild of `lit_review/04_mental_health_ai_evals.md`, an empty cell in the literature.
 
 Four methodology-layer bodies of work ground the paper's scientific rigor. Full annotations in `lit_review/05_methodology.md`; the key commitments we adopt:
 
@@ -86,20 +86,34 @@ A benchmark methodology paper must validate each layer from inference plumbing u
 | **1. Inference pipeline reliability** | Provider clients, retry logic, JSON parsing, and scalar scoring all work end-to-end. Our substitute jury produces scalar scores consistent with TRIDENT's published references. | TRIDENT calibration: GPT-4o + GPT-4o-mini × (law, med, finance), n=30, against Figure 4. Success = |observed − published| ≤ 0.3. | ✅ **Validated**. 6 of 6 calibration cells PASS (Week 1). |
 | **2. Rubric-item judge reliability** | LLM judges can reliably score structured rubric items (present / absent / boundary violation) — not only scalar harmfulness. | Two humans hand-score a stratified 20-item subset against the rubric. LLM judges score the same subset. Report ICC (primary, continuous), Gwet's AC1 (categorical items with extreme prevalence), and Cohen's κ (secondary). Target benchmark: reliability comparable to Flemotomos et al. 2022 (automated CBT adherence vs. human coders, 80%+ agreement). | ⏳ **Planned for Week 3**. Requires rubric draft first. |
 | **3. Rubric validity** | The rubric items correctly operationalize the professional standards they claim to operationalize. Each item traces to a specific statute section, professional code provision, or case law precedent. | Domain-expert review for at least one scenario. Items flagged as incorrect are dropped; items flagged as ambiguous are revised. Document the review. | ⚠️ **Partial**. Items will be drafted in Week 2 with full statute/code citations; full expert review deferred to Phase 2 and flagged as a limitation. |
-| **4. Statistical power** | Sample sizes are adequate to detect the effect sizes the primary hypotheses rely on. | Back-of-envelope power analysis: assume ICR ≈ 0.25, desired 95% CI half-width ≤ 0.10. Primary test (MQ1 one-sample against 0) is well-powered at N = 1,620 role-pair cells across 3 scenarios × 6 roles × 6 models × 15 pair-types. Exploratory tests (SQ2, SQ3 interaction effects) are acknowledged as underpowered. | ⚠️ **Honest limitation**. MQ1/SQ1 adequately powered; SQ2/SQ3 explicitly framed as exploratory. |
+| **4. Statistical power** | Sample sizes are adequate to detect the effect sizes the primary hypotheses rely on. | Back-of-envelope power analysis (placeholder pending real analysis): assume ICR ≈ 0.25 with 95% CI half-width target ≤ 0.10. Primary test (MQ1 one-sample against 0) operates over **N = 270 role-pair cells** for 15 unordered pairs × 3 scenarios × 6 models, or **N = 540** for ordered (i,j) ≠ (j,i) pairs. Exploratory tests (SQ2, SQ3 interaction effects) are acknowledged as underpowered. A formal power analysis with bootstrapped CIs is queued for Week 4. | ⚠️ **Honest limitation**. MQ1/SQ1 likely adequately powered at the unit-of-analysis used; SQ2/SQ3 explicitly framed as exploratory. The earlier figure of "1,620 cells" was incorrect — it double-counted the role-pair dimension. |
 | **5. Construct validity** | ICR measures *standard bleed*, not an adjacent construct (sycophancy, rhetorical template-matching, prompt-induced artifact). | Discriminant analysis in MQ2: Pearson r between a model's ICR and its sycophancy rate on the same scenarios. Pre-registered thresholds: r < 0.5 = clear discriminant validity; 0.5 ≤ r < 0.8 = shared variance but distinguishable; r ≥ 0.8 = reframe as professional-framework sycophancy. Ancillary: produce ≥ 2 existence proofs per quadrant (sycophantic-without-bleeding, bleeding-without-sycophancy). | ⏳ **Planned for Week 4**. |
 
-**For peer review**: the paper explicitly claims Layer 1 is fully validated, Layer 2 and Layer 5 are validated on the pilot scenario, and Layers 3 and 4 are partially validated with documented Phase 2 plans. This stack is designed to be auditable: each layer's evidence is cited separately; no layer's conclusion is allowed to stand in for any other's.
+**For peer review**: as of this draft (Week 1 end), only Layer 1 is validated. Layers 2 and 5 are *scheduled* for Weeks 3 and 4 respectively — they are not yet validated. Layer 3 is *partial* (statute / professional-code citations per item; expert review deferred to Phase 2). Layer 4 is *honest limitation* (formal power analysis queued; primary hypothesis likely powered, exploratory hypotheses underpowered). The stack is designed to be auditable: each layer's evidence is cited separately; no layer's conclusion is allowed to stand in for any other's. **A reader should not infer Layer 1's PASS verdict implies anything about Layers 2–5.**
 
 ## 5. Methodology
 
-### 5.1 Scenario design
+### 5.1 Experimental design: AI serves a role-claiming user (Setup B), with a no-claim baseline
 
-A **scenario** is a structured artifact consisting of:
+The benchmark targets the **deployment pattern in which the AI is used as a tool by a professional**, not the deployment pattern in which the AI is assigned to act as a substitute professional. The distinction matters and is locked in for Phase 1.
+
+| Configuration | System prompt | User prompt | What it measures |
+|---|---|---|---|
+| **Setup B** (Phase 1 primary) | Standard helpful-assistant default | *"I am a [role] asking about..."* — same facts across 6 role framings | Whether the AI applies the *role-appropriate professional standard* given who is asking. Standard bleed is observable in this configuration. |
+| **No-claim baseline** (Phase 1) | Standard helpful-assistant default | Same facts, no role identification | Establishes the AI's *default* standard application when no role is claimed. Anchors the role-specific deltas. |
+| **Setup A** (Phase 2 comparison) | *"You are a [role]..."* | Same facts | Whether system-prompt role assignment produces different standard application than user-claim framing. Closes the cross-configuration question. |
+
+**Scientific motivation for Setup B as primary:**
+
+- **Deployment volume tilts here.** The dominant 2026 deployment pattern is general-purpose frontier LLMs (Claude, GPT, Llama) used by professionals as productivity tools — judges using ChatGPT for analysis, social workers using Claude for case-note thinking, clinicians using Copilot. Setup A deployments (chatbots assigned-as-therapist, AI-as-lawyer products) are visible but lower-volume.
+- **Standard bleed is only observable in Setup B.** When the AI plays the role, the question collapses to "does it act as that role would?" When the AI serves the role, the question opens to "does it apply *that role's* standards to identical facts when *another role* would apply different standards?" The cross-role failure mode requires the user-claim configuration.
+- **Verified literature gap.** Setup A is well-covered (Liang et al. 2510.24677, MHSafeEval 2604.17730, MedAgents 2311.10537, AgentClinic 2405.07960). Setup B for cross-role professional fidelity is empty (TRIDENT 2507.21134 is single-role refusal; U-SafeBench 2502.15086 varies user vulnerabilities not professions; Bhatia/Christophe Overalignment 2601.18334 is single-domain basic-vs-expert nudge).
+
+**A scenario** is a structured artifact consisting of:
 
 1. **Shared fact pattern**: jurisdiction-specific clinical and situational facts (diagnosis, treatment history, current symptoms, risk factors, family dynamics).
-2. **Six role-framed prompts**: the same facts rendered from the first-person perspective of patient, loved one (family), therapist, police officer, social worker, and judge.
-3. **Role-specific rubrics**: per-role lists of must-include, must-not-include, and boundary-check items, each with a traceable source citation (statute section, professional code rule, case law).
+2. **Seven prompt framings per scenario**: one no-claim baseline, plus six role-framed prompts rendering the same facts from the first-person perspective of patient, loved one (family), therapist, police officer, social worker, and judge.
+3. **Role-specific rubrics**: per-role lists of must-include, must-not-include, and boundary-check items, each with a traceable source citation (statute section, professional code rule, case law). Items inherit from existing validated rubrics where they exist (CTRS / MISC / Beidas CBT Fidelity Scale / NASW Code / CounselBench items / MHSafeEval taxonomy) and are author-drafted with statutory citation where they do not (judge, officer, patient, family roles).
 4. **Divergence matrix**: for each of 15 ordered role pairs, a specification of which response dimensions should diverge and which should converge, grounded in the professional codes of the two roles involved.
 
 ### 5.2 Anchor scenario: NY involuntary commitment (Kendra's Law)
@@ -122,7 +136,7 @@ The substitution is validated at Layer 1 of the stack (§4) and disclosed as a m
 
 ### 5.4 Primary metrics
 
-1. **Inappropriate Convergence Rate (ICR)**: for each model × scenario, the proportion of role-pair cells where the divergence matrix specifies expected divergence but the model's responses converge. Adjusted for paraphrase-baseline noise following the Adjusted Sycophancy Score methodology of Bhatia et al. (2026).
+1. **Inappropriate Convergence Rate (ICR)**: for each model × scenario, the proportion of role-pair cells where the divergence matrix specifies expected divergence but the model's responses converge. Adjusted for paraphrase-baseline noise following an Adjusted-Sycophancy-Score-style methodology attributed to the "Overalignment in Frontier LLMs" paper at arxiv 2601.18334 (Jan 2026). **Author attribution to be verified** against the primary source — subagent outputs in this project disagree (Christophe et al. vs. Bhatia et al.), and the paper has not yet been read directly.
 2. **Pairwise fidelity matrix**: per-role rubric-adherence scores, reported as a 6×6 heat map per model.
 3. **Failure type distribution**: breakdown of observed failures into standard bleed, role confusion, boundary violation, false authority, least-restrictive-option failure, and sycophancy. Grounded in a pre-registered failure taxonomy.
 4. **Directional asymmetry**: ICR computed for (i, j) and (j, i) separately; bleed is hypothesized to be non-symmetric (e.g., therapist → officer bleed may differ from officer → therapist bleed).
@@ -143,9 +157,10 @@ The subscripted labels are used in every figure, table, and numeric claim in the
 
 - **3 Kendra's Law scenario variants** (risk-level × treatment-history × complicating-factors variation).
 - **6 roles per scenario**: patient, loved one, therapist, officer, social worker, judge.
-- **6 models**: Claude Sonnet 4.6, Claude Haiku 4.5, GPT-4o, GPT-4o-mini, Llama 3.3 70B (via Groq), one Gemini-family or open-weight addition as budget permits.
+- **5 confirmed models** (with one conditional sixth slot subject to API access and budget): Claude Sonnet 4.6, Claude Haiku 4.5, GPT-4o, GPT-4o-mini, Llama 3.3 70B (via Groq). Sixth conditional addition: Gemini 2.5 Flash (requires Google AI Studio key) or one additional open-weight model.
 - **Per-role jury composition**: standing jury is Claude Sonnet 4.6 + Llama 3.1 8B; for the Claude Sonnet 4.6 target only, Judge A is swapped to Claude Opus 4.5 to avoid self-scoring. Documented.
 - **Validation subset**: 20 randomly selected (response × rubric item) pairs hand-scored by the author plus one collaborator; κ_human–judge computed.
+- **Per-scenario prompt count**: 7 framings (1 no-claim baseline + 6 role-framed). Setup A (system-prompt role assignment) is excluded from Phase 1 and reserved for Phase 2 cross-configuration comparison.
 
 ### 5.7 Explicit out-of-scope for the Phase 1 sprint paper
 
@@ -153,6 +168,7 @@ The subscripted labels are used in every figure, table, and numeric claim in the
 - Multi-turn scenarios: deferred. Single-turn only in Phase 1.
 - Jurisdictional variation (SQ3): scaffolding in place; empirical data deferred if sprint budget constrains.
 - Domain-specialized model comparison (H4 in earlier drafts): deferred to Phase 2 pending HF Inference / Together.ai access.
+- Setup A cross-configuration comparison (system-prompt role assignment vs. user-claim framing): deferred to Phase 2. Phase 1 is exclusively Setup B + no-claim baseline.
 - Observational (Clio-style) validation on real conversations: acknowledged as the gold standard for Anthropic societal-impacts methodology; reserved for a follow-up paper.
 
 ## 6. Contribution Relative to Prior Art
@@ -162,13 +178,15 @@ The subscripted labels are used in every figure, table, and numeric claim in the
 - **Against TRIDENT and adjacent domain-specific safety benchmarks**: CrossSystemEval replaces single-role refusal measurement with multi-role fidelity measurement, replaces scalar harmfulness with structured rubric-item scoring, and adds cross-role consistency (ICR) as a primary metric. Only the philosophy of grounding in codified professional codes is inherited.
 - **Against pairwise evaluation work (ELEPHANT, Kempermann, Overalignment in Healthcare)**: extends 2-condition pairwise comparisons to R × R = 15 role-pair comparisons with ex-ante normative divergence expectations encoded in a reusable matrix.
 - **Against persona benchmarks (PersoBench, LIFECHOICE)**: shifts the question from "does the model maintain a persona?" to "does the model appropriately differentiate across personas on the same facts?"
-- **Against mandated-reporter role variation (Wagner et al. 2025)**: generalizes the 3-role variation in a single reporting scenario to a 6-role R × R design with an explicit divergence matrix, applied in the commitment domain flagged by Torous et al. (2025) as a priority gap.
+- **Against role-conditioning shallowness (Liang et al. 2025, arxiv 2510.24677)**: Liang shows that prompt-based clinical role-playing (medical student / resident / attending) leaves underlying reasoning pathways unchanged. CrossSystemEval moves the question from *"do role prompts change the model's internals?"* to *"do role prompts change the standards the model applies to identical facts?"* — and operationalizes that as a measurable rubric-item divergence with ICR as the primary metric. The verified precedent thus *motivates* CrossSystemEval; it does not occupy the gap.
+- **Against role-aware safety taxonomies (MHSafeEval / Lee et al. 2026, arxiv 2604.17730)**: MHSafeEval indexes harm by the role the *AI counselor* adopts. CrossSystemEval indexes appropriateness by the role of the *user* presenting the scenario, on the same statutory facts. The two are complementary and can be combined in Phase 2; they are not the same evaluation unit.
+- **Against mandated-reporter LLM evaluation (gap)**: per the verified `lit_review/04_mental_health_ai_evals.md` (2026-04-27 rebuild), no published LLM benchmark on Tarasoff / CPS / APS / IPV mandated-reporter decisions across professional role frames was found. CrossSystemEval's Kendra's Law pilot is one cell of this larger empty space; mandated-reporter scenarios are an explicit Phase 2 target.
 - **Against social science**: to our knowledge, the first computational benchmark to operationalize Lipsky's street-level bureaucracy framework and French & Raven's bases of social power as structural priors for LLM evaluation.
 
-### Secondary (pilot empirical)
+### Secondary (pilot empirical) — **planned for Weeks 2–4, not yet executed**
 
-- Proof that the benchmark produces measurable differentiation across 6 frontier LLMs on the Kendra's Law anchor scenario.
-- A characterized **standard bleed** as a named, measurable failure mode distinct from sycophancy under the construct validity analysis (MQ2).
+- *Planned*: pilot evidence that the benchmark produces measurable differentiation across the confirmed 5-model lineup on the Kendra's Law anchor scenario.
+- *Planned*: empirical position on whether **standard bleed** is distinct from sycophancy under the construct-validity analysis (MQ2 / Layer 5). The discriminant test has pre-registered thresholds (§4 Layer 5); the result of that test is not assumed.
 
 ## 7. Limitations
 
@@ -198,4 +216,6 @@ The subscripted labels are used in every figure, table, and numeric claim in the
 
 ## 10. References
 
-*Full annotated bibliography in `lit_review/0{1,2,3,4,5}_*.md`; rendered in the project dashboard at `/literature`.*
+*Full annotated bibliography in `lit_review/0{1,2,3,4,5,6}_*.md`; rendered in the project dashboard at `/literature`.*
+
+**Citation verification status (as of Week 1 end):** Of the ~80 papers cited across the six lit-review files, the following have been read directly and are confidently citable: TRIDENT (Hui et al. 2025, arxiv 2507.21134); ELEPHANT (Cheng et al. 2025, arxiv 2505.13995); Lipsky 1980/2010; French & Raven 1959. The remaining citations were surfaced by background lit-review subagents that explicitly disclaimed full verification of arxiv IDs, author attributions, and venue details. **Before submitting any draft of this paper to a venue, every citation must be re-verified against its primary source.** This is a Phase 1 sprint scope limitation; Week 2+ work should include a citation-verification pass.
