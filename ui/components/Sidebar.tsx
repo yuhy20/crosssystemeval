@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import {
   BookOpen,
+  ClipboardList,
   FileText,
   FlaskConical,
   Home,
@@ -18,6 +19,7 @@ const nav = [
   { href: "/literature", label: "Literature", icon: BookOpen },
   { href: "/worklog", label: "Worklog", icon: ListChecks },
   { href: "/trident", label: "TRIDENT Calibration", icon: FlaskConical },
+  { href: "/pilot", label: "Rubric Pilot", icon: ClipboardList },
 ];
 
 export default function Sidebar() {

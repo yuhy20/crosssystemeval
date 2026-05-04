@@ -9,7 +9,7 @@ export default function HomePage() {
   return (
     <Page>
       <PageHeader
-        eyebrow="Benchmark proposal · Sprint Week 2 of 5"
+        eyebrow="Benchmark proposal · Sprint Week 3 of 5"
         title="CrossSystemEval"
         description="A benchmark methodology for measuring whether LLMs maintain role-appropriate professional-standard fidelity when the same factual scenario is framed from different professional perspectives. Primary contribution is methodological (evaluation unit, rubric-item scoring, Inappropriate Convergence Rate metric); pilot empirical study on NY Kendra's Law is demonstrative."
       />
@@ -24,7 +24,7 @@ export default function HomePage() {
           <Stat
             label="Validation layers"
             value="1 / 5"
-            hint="Layer 1 (inference) complete"
+            hint="Layer 2 prep — judge rubric pilot live"
           />
           <Stat
             label="Lit reviews"
@@ -62,7 +62,7 @@ export default function HomePage() {
             eyebrow="Weekly diary"
             title="Worklog"
             description="Decisions, open questions, risks, and changes-of-mind as the sprint progresses. Explicit trail of methodological drift and corrections."
-            meta="Week 2 in progress · scenario v1 drafted"
+            meta="Week 3 in progress · pilot live, hand-scoring next"
             status="draft"
           />
           <LinkCard
@@ -72,6 +72,14 @@ export default function HomePage() {
             description="Validates inference pipeline + substitute jury (Claude Sonnet 4.6 + Llama 3.1 8B) against TRIDENT Figure 4 published means. Foundation stone of the 5-layer validation stack — not the full validation."
             meta="6 of 6 PASS · documented substitution"
             status="ready"
+          />
+          <LinkCard
+            href="/pilot"
+            eyebrow="Validation — Layer 2 prep"
+            title="Rubric Pilot · Judge v1"
+            description="Pilot of the 10-item judge rubric (0–3 anchored Likert) on scenario v1, run across 3 cross-family models × 4 prompts (baseline / judge × Q1 / Q2). Tests rubric design — item-correlation, intra-rater κ, baseline-vs-judge delta — before scaling to the remaining roles."
+            meta="12 responses generated · awaiting hand-scoring"
+            status="draft"
           />
         </div>
       </Section>
@@ -102,9 +110,12 @@ export default function HomePage() {
             Claude Haiku 4.5, GPT-4o, GPT-4o-mini, Llama 3.3 70B) plus one
             conditional sixth slot. As of Week 2 mid-sprint, scenario v1
             (family-petitioner pathway) has been drafted with all six role
-            analyses; rubric items and inference runs are still ahead. Only
+            analyses, the judge rubric v1 (10 items) is drafted with statute
+            traceability, and a 12-cell pilot (3 cross-family models × 4
+            prompts) has been generated and is awaiting hand-scoring. Only
             Layer 1 of the 5-layer validation stack (inference pipeline
-            calibration against TRIDENT) has been validated to date.
+            calibration against TRIDENT) has been formally validated to date;
+            the pilot is the first step toward Layer 2.
           </p>
         </SoftCard>
       </Section>
@@ -154,64 +165,61 @@ export default function HomePage() {
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           <SoftCard className="animate-fade-up-delay-3">
             <div className="text-[11px] font-semibold uppercase tracking-[0.08em] text-accent">
-              Lit review 04 rebuilt — verification-mandatory
+              Judge rubric v1 drafted (10 items, 0–3 anchored)
             </div>
             <p className="mt-2 text-[14.5px] leading-relaxed text-ink-secondary">
-              Mental-health AI evals review re-run with verification-mandatory
-              subagent: every URL personally fetched. Outcome — 20 verified
-              papers (14 primary + 6 methodological precedent), 7 confabulated
-              citations confirmed not to exist. Most importantly,{" "}
-              <strong className="text-ink">Wagner et al. 2025 (JAMA on mandated-reporter role-framing)</strong>{" "}
-              does not exist; the Week 1 agenda used it as the load-bearing
-              near-miss for the contribution claim. Replaced with verified
-              precedents (Liang 2510.24677, MHSafeEval 2604.17730, AgentClinic
-              2405.07960) and three new contribution claims.
+              First role rubric written end-to-end with statute traceability:
+              7 role-appropriate items (§9.60(c) test, seven prongs, clear-and-
+              convincing standard, §9.60(g) procedure, In re K.L. AOT-vs-forced-
+              medication, ABA Rule 2.2 impartiality, ABA Rule 2.9 record-bound)
+              and 3 bleed-detection items (clinical / advocacy / LLM-use limits).
+              Mixed item types are deliberate — the pilot tests whether they
+              load on a single factor or stay separable.
             </p>
           </SoftCard>
           <SoftCard className="animate-fade-up-delay-3">
             <div className="text-[11px] font-semibold uppercase tracking-[0.08em] text-accent">
-              Setup B + no-claim baseline locked in
+              Pilot pipeline reuses TRIDENT harness
             </div>
             <p className="mt-2 text-[14.5px] leading-relaxed text-ink-secondary">
-              Phase 1 commits to{" "}
-              <strong className="text-ink">Setup B</strong> (AI serves a user
-              who claims a role) plus a no-claim baseline. Setup A (AI plays the
-              role via system prompt) is deferred to Phase 2. Three reasons:
-              deployment-volume mismatch (Setup B is the dominant deployment
-              shape), standard-bleed observability (Setup B's bleed is directly
-              in the response), and verified-literature gap (Liang 2510.24677
-              and the role-eval cluster are Setup-A; Setup B is comparatively
-              under-studied).
+              Rather than manually pasting prompts into chat windows, the pilot
+              extends the TRIDENT calibration harness:{" "}
+              <code className="text-ink">build_client</code> factory routes
+              <code className="text-ink"> claude-sonnet-4-6</code> (Anthropic),{" "}
+              <code className="text-ink">gpt-4o</code> (OpenAI), and{" "}
+              <code className="text-ink">llama-3.3-70b-versatile</code> (Groq)
+              from the same <code className="text-ink">.env</code>. 12 cells
+              (3 models × 4 prompts) generated reproducibly to{" "}
+              <code className="text-ink">data/pilot/judge_v1/responses.jsonl</code>{" "}
+              with full metadata.
             </p>
           </SoftCard>
           <SoftCard className="animate-fade-up-delay-3">
             <div className="text-[11px] font-semibold uppercase tracking-[0.08em] text-accent">
-              Scenario v1 drafted — family-petitioner pathway
+              ICR pre-registered as delta-from-baseline
             </div>
             <p className="mt-2 text-[14.5px] leading-relaxed text-ink-secondary">
-              §9.60 anchor scenario v1 written:{" "}
-              <em>family-petitioner pathway with prior §9.41 officer contact</em>.
-              Selected over emergency-hold (officer-physician dyad dominates)
-              and two-physician certification (removes officer + judge). Shared
-              fact pattern + all six role analyses (patient / family / treating
-              psychiatrist / CIT officer / LCSW / judge), each with codified
-              standards and standard-bleed risks. Statutory verification
-              against Westlaw / NY Senate codified text still pending before
-              pilot.
+              Research agenda §5.4 commits to computing ICR as the delta between
+              role-framed and no-claim-baseline scores per item, not as
+              absolute role-framed scores. This separates{" "}
+              <strong className="text-ink">standard bleed</strong> (the role
+              claim moves the model in an inappropriate direction) from{" "}
+              <strong className="text-ink">knowledge gap</strong> (the model
+              can't apply the standard regardless of who's asking). The pilot's
+              baseline-vs-judge-framed delta operationalizes this for one role.
             </p>
           </SoftCard>
           <SoftCard className="animate-fade-up-delay-3">
             <div className="text-[11px] font-semibold uppercase tracking-[0.08em] text-accent">
-              Risk
+              Risk · Week 2 slippage
             </div>
             <p className="mt-2 text-[14.5px] leading-relaxed text-ink-secondary">
-              Layers 2 (rubric-item judge reliability) and 5 (construct
-              validity) remain unexecuted; sprint Weeks 3 and 4 are allocated
-              to them. The §9.60 statutory text in scenario v1 is drawn from
-              summary sources (Wikipedia, public.law); direct-statute
-              verification is queued for Wed 4/30 before rubric-item drafting
-              begins. If §9.60(e) categories or §9.60(c) prongs differ from
-              summaries, the scenario may need adjustment.
+              Hand-scoring the 12 responses (≥24h between sessions) and the
+              §9.60 direct-statute verification both slipped from Week 2. Both
+              moved to early Week 3 — neither blocks scaling, but both must
+              clear before the rubric is extended to therapist (planned
+              second-role pilot). Layers 2 and 5 of the validation stack remain
+              unexecuted; Weeks 3 and 4 still allocated to them.
             </p>
           </SoftCard>
         </div>
