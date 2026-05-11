@@ -10,6 +10,7 @@ import {
   FlaskConical,
   Home,
   ListChecks,
+  Mail,
   Network,
 } from "lucide-react";
 
@@ -20,6 +21,7 @@ const nav = [
   { href: "/worklog", label: "Worklog", icon: ListChecks },
   { href: "/trident", label: "TRIDENT Calibration", icon: FlaskConical },
   { href: "/pilot", label: "Rubric Pilot", icon: ClipboardList },
+  { href: "/outreach", label: "Outreach", icon: Mail },
 ];
 
 export default function Sidebar() {

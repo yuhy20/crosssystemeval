@@ -223,6 +223,71 @@ export interface PilotSheet {
   sheetMarkdown: string;
 }
 
+// ---------------------------------------------------------------------------
+// Outreach — expert-reviewer briefs / templates / call guides
+// ---------------------------------------------------------------------------
+
+export interface OutreachDocMeta {
+  slug: string;
+  title: string;
+  recipient: string;
+  length: string;
+  purpose: string;
+  status: string;
+  date: string;
+  filename: string;
+  group: "shared" | "lawyer" | "tasc" | "index";
+}
+
+export interface OutreachDoc extends OutreachDocMeta {
+  content: string;
+}
+
+function classifyOutreachFile(filename: string): OutreachDocMeta["group"] {
+  if (filename === "README.md") return "index";
+  if (filename.startsWith("lawyer_")) return "lawyer";
+  if (filename.startsWith("tasc_")) return "tasc";
+  return "shared";
+}
+
+export function getOutreachDocs(): OutreachDocMeta[] {
+  const dir = path.join(ROOT, "outreach");
+  if (!fs.existsSync(dir)) return [];
+
+  const files = fs
+    .readdirSync(dir)
+    .filter((f) => f.endsWith(".md"))
+    .sort();
+
+  return files.map((filename) => {
+    const raw = fs.readFileSync(path.join(dir, filename), "utf8");
+    const { data } = matter(raw);
+    return {
+      slug: asString(data.slug, filename.replace(/\.md$/, "")),
+      title: asString(data.title),
+      recipient: asString(data.recipient ?? data.audience),
+      length: asString(data.length),
+      purpose: asString(data.purpose),
+      status: asString(data.status, "draft"),
+      date: asString(data.date),
+      filename,
+      group: classifyOutreachFile(filename),
+    };
+  });
+}
+
+export function getOutreachDoc(slug: string): OutreachDoc | null {
+  const docs = getOutreachDocs();
+  const meta = docs.find((d) => d.slug === slug);
+  if (!meta) return null;
+  const raw = fs.readFileSync(
+    path.join(ROOT, "outreach", meta.filename),
+    "utf8",
+  );
+  const { content } = matter(raw);
+  return { ...meta, content };
+}
+
 export function getPilotSheet(label: string): PilotSheet | null {
   const data = getPilotData();
   const entry = data.responses.find((r) => r.label === label);
