@@ -1,0 +1,28 @@
+============================================================
+RLVR TEMPLATE — VERIFIED STYLE FOR CROSSSYSTEMEVAL DECK
+============================================================
+slide_width:  9144000 EMU (10.000 in)
+slide_height: 5143500 EMU (5.625 in)
+
+Slide masters and layouts:
+  Master: 
+    Layout 0: DEFAULT
+
+Palette (verified from slide XML in the template):
+  NAVY (background, dark text): #0D1B2A  rgb(13, 27, 42)
+  PANEL (light card): #F4F7FA  rgb(244, 247, 250)
+  CYAN (bright accent): #00B4D8  rgb(0, 180, 216)
+  CYAN_LITE (subtitle / callout): #90E0EF  rgb(144, 224, 239)
+  SLATE (muted body / caption): #8FA3B1  rgb(143, 163, 177)
+  AMBER (secondary signal): #F4A535  rgb(244, 165, 53)
+  GREEN (success signal): #3DBE7A  rgb(61, 190, 122)
+
+Typography: Calibri throughout.
+  Cover title: 36pt bold WHITE
+  Cover subtitle: 16pt CYAN_LITE
+  Slide title: 22pt bold WHITE on NAVY header band
+  Section block number: 64pt bold CYAN on NAVY
+  Section title: 32pt bold WHITE on NAVY
+  Body bullet: 13pt NAVY on PANEL card, level-0
+  Sub-bullet: 12pt SLATE on PANEL, level-1
+  Footnote: 9pt SLATE

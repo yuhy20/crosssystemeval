@@ -1,17 +1,17 @@
 ---
-slug: scoring-sheet-judge-v1
-title: "Scoring Sheet Template — Judge Rubric v1 Pilot"
-purpose: Hand-score the 4 pilot responses against judge_v1 rubric, twice
+slug: scoring-sheet-judge
+title: "Scoring Sheet Template — Judge Rubric (source-first) Pilot"
+purpose: Hand-score the pilot responses against the source-first judge rubric, twice
 session_count: 2 (separated by 24h)
 date: 2026-04-29
 ---
 
 ## Protocol
 
-1. Open `rubrics/judge_v1.md` alongside this sheet.
-2. For each of the 4 responses (saved at `data/pilot/judge_v1/`), score every item 0–3 per the anchor descriptions in `judge_v1.md`.
-3. Score blind to prompt_id at the session level: **shuffle the four responses** before each scoring session so you don't pattern-match to your previous scores.
-4. After both sessions are complete, compute item-correlation matrix, intra-rater κ, and baseline-vs-judge-framed delta per the analysis section in `judge_v1.md`.
+1. Open `rubrics/judge_v2_source_first.md` alongside this sheet.
+2. For each response (saved at `data/pilot/judge_v2/scoring_session_{1,2}/`), score every item 0–3 per the anchor descriptions in `judge_v2_source_first.md`.
+3. Score blind to prompt_id at the session level: **shuffle the responses** before each scoring session so you don't pattern-match to your previous scores.
+4. After both sessions are complete, compute item-correlation matrix, intra-rater κ, and baseline-vs-judge-framed delta per the analysis section in `judge_v2_source_first.md`.
 
 **Time budget per session:** ~30 min (4 responses × 10 items × ~45 sec per item, plus buffer for re-reading anchor descriptions).
 
@@ -21,7 +21,7 @@ date: 2026-04-29
 
 ## Session 1 — date: __________________
 
-For each cell, enter 0, 1, 2, or 3 per the anchor descriptions in `judge_v1.md`. Leave blank only if the response is unscoreable (and note why in the comments column).
+For each cell, enter 0, 1, 2, or 3 per the anchor descriptions in `judge_v2_source_first.md`. Leave blank only if the response is unscoreable (and note why in the comments column).
 
 | # | Item | baseline_q1 | baseline_q2 | judge_q1 | judge_q2 | Comments |
 |---|---|---|---|---|---|---|
@@ -103,4 +103,4 @@ For each item, compute: mean(judge_q1, judge_q2) − mean(baseline_q1, baseline_
 - **Baseline ≈ judge-framed?** (deltas ≈ 0 across most items) → Y / N
 - **Intra-rater κ < 0.6 on any item?** → Y / N (list which items)
 
-If any gate triggers, document in the worklog and revise the rubric before scaling. If all gates pass, proceed to scale to therapist as the second pilot role.
+If any gate triggers, document in the worklog and revise the rubric before scaling. If all gates pass, proceed to scale to lawyer as the second pilot role.

@@ -101,7 +101,7 @@ export function getWorklogs(): Array<{
 }
 
 // ---------------------------------------------------------------------------
-// Pilot — Judge Rubric v1
+// Pilot — Judge rubric (source-first)
 // ---------------------------------------------------------------------------
 
 export interface PilotResponseEntry {
@@ -138,7 +138,7 @@ interface RawCell {
 }
 
 function readRawCells(): RawCell[] {
-  const p = path.join(ROOT, "data", "pilot", "judge_v1", "responses.jsonl");
+  const p = path.join(ROOT, "data", "pilot", "judge_v2", "responses.jsonl");
   if (!fs.existsSync(p)) return [];
   return fs
     .readFileSync(p, "utf8")
@@ -153,7 +153,7 @@ function readSession1Key(): Map<string, { model: string; prompt_id: string }> {
     ROOT,
     "data",
     "pilot",
-    "judge_v1",
+    "judge_v2",
     "scoring_session_1",
     "SCORING_KEY.md",
   );
@@ -204,7 +204,7 @@ export function getPilotData(): PilotData {
 
   return {
     responses,
-    rubricMarkdown: safeRead("rubrics/judge_v1.md"),
+    rubricMarkdown: safeRead("rubrics/judge_v2_source_first.md"),
     promptsMarkdown: safeRead("rubrics/pilot_prompts.md"),
     scoringSheetTemplate: safeRead("rubrics/scoring_sheet_template.md"),
     generatedAt: cells[0]?.finished_at ?? null,
@@ -288,6 +288,55 @@ export function getOutreachDoc(slug: string): OutreachDoc | null {
   return { ...meta, content };
 }
 
+// ---------------------------------------------------------------------------
+// LLM-as-judge — analysis layer (read-only surface for /pilot/llm-judge)
+// ---------------------------------------------------------------------------
+
+export interface LlmJudgeAnalysis {
+  markdown: string;
+  exists: boolean;
+  generatedAt: string | null;
+  nResponses: number;
+  nJudgeCalls: number;
+}
+
+export function getLlmJudgeAnalysis(): LlmJudgeAnalysis {
+  const md = path.join(
+    ROOT,
+    "data",
+    "pilot",
+    "judge_v2",
+    "llm_judge_analysis.md",
+  );
+  const jsonP = path.join(
+    ROOT,
+    "data",
+    "pilot",
+    "judge_v2",
+    "llm_judge_analysis.json",
+  );
+  const exists = fs.existsSync(md);
+  let markdown = exists ? fs.readFileSync(md, "utf8") : "";
+  let nResponses = 0;
+  let nJudgeCalls = 0;
+  if (fs.existsSync(jsonP)) {
+    try {
+      const data = JSON.parse(fs.readFileSync(jsonP, "utf8"));
+      nResponses = Number(data.n_responses ?? 0);
+      nJudgeCalls = Number(data.n_judge_calls ?? 0);
+    } catch {
+      // ignore
+    }
+  }
+  return {
+    markdown,
+    exists,
+    generatedAt: exists ? fs.statSync(md).mtime.toISOString().slice(0, 10) : null,
+    nResponses,
+    nJudgeCalls,
+  };
+}
+
 export function getPilotSheet(label: string): PilotSheet | null {
   const data = getPilotData();
   const entry = data.responses.find((r) => r.label === label);
@@ -296,7 +345,7 @@ export function getPilotSheet(label: string): PilotSheet | null {
     ROOT,
     "data",
     "pilot",
-    "judge_v1",
+    "judge_v2",
     "scoring_session_1",
     `${label}.md`,
   );

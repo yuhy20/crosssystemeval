@@ -112,8 +112,8 @@ The benchmark targets the **deployment pattern in which the AI is used as a tool
 **A scenario** is a structured artifact consisting of:
 
 1. **Shared fact pattern**: jurisdiction-specific clinical and situational facts (diagnosis, treatment history, current symptoms, risk factors, family dynamics).
-2. **Seven prompt framings per scenario**: one no-claim baseline, plus six role-framed prompts rendering the same facts from the first-person perspective of patient, loved one (family), therapist, police officer, social worker, and judge.
-3. **Role-specific rubrics**: per-role lists of must-include, must-not-include, and boundary-check items, each with a traceable source citation (statute section, professional code rule, case law). Items inherit from existing validated rubrics where they exist (CTRS / MISC / Beidas CBT Fidelity Scale / NASW Code / CounselBench items / MHSafeEval taxonomy) and are author-drafted with statutory citation where they do not (judge, officer, patient, family roles).
+2. **Seven prompt framings per scenario**: one no-claim baseline, plus six role-framed prompts rendering the same facts from the first-person perspective of patient, family (loved one), doctor (treating psychiatrist), lawyer (respondent's counsel), social worker, and judge.
+3. **Role-specific rubrics**: per-role lists of must-include, must-not-include, and boundary-check items, each with a traceable source citation (statute section, professional code rule, case law). Items inherit from existing validated rubrics where they exist (CTRS / MISC / Beidas CBT Fidelity Scale / NASW Code / CounselBench items / MHSafeEval taxonomy) and are author-drafted with statutory citation where they do not (judge, lawyer, social worker, patient, family roles).
 4. **Divergence matrix**: for each of 15 ordered role pairs, a specification of which response dimensions should diverge and which should converge, grounded in the professional codes of the two roles involved.
 
 ### 5.2 Anchor scenario: NY involuntary commitment (Kendra's Law)
@@ -121,7 +121,7 @@ The benchmark targets the **deployment pattern in which the AI is used as a tool
 Kendra's Law (NY MHL §9.60) introduces Assisted Outpatient Treatment alongside the traditional §9.39 emergency admission and §9.27 two-physician certification pathways, creating richer divergence structure for the judge and social-worker roles than single-pathway jurisdictions (e.g., California LPS). The anchor scenario uses Kendra's Law as the statutory frame and varies risk level, treatment history, family dynamics, and complicating factors across three scenario variants.
 
 **Statutes cited**: MHL §9.27, §9.31, §9.39, §9.60, §33.03.
-**Professional codes cited**: APA Ethics Code; ABA Model Rules 1.2, 1.4, 2.1; NASW Code §1.02; NY State Police Crisis Intervention protocols.
+**Professional codes cited**: AMA Code of Medical Ethics — Principles + Opinions 1.1.7, 2.1.2, 3.2.1, 5.1, 5.2, 10.1 (doctor); 22 NYCRR Part 1200 — NY Rules of Professional Conduct, Rules 1.3, 1.4, 1.6, 1.14, 2.1, 3.1 (lawyer); 22 NYCRR Part 100 — NY Rules Governing Judicial Conduct (judge); NASW Code §1.02 (social worker); NY PHL §230 (physician affidavit standards).
 
 ### 5.3 Jury composition (documented substitution from TRIDENT)
 
@@ -141,7 +141,7 @@ The substitution is validated at Layer 1 of the stack (§4) and disclosed as a m
    **Pre-registered: ICR is computed as delta from the no-claim baseline, not as absolute role-framed scores.** Each rubric item is scored on every framing of every scenario, including the no-claim baseline (framing #1 of 7). For each role-rubric × role-framing cell, the score entering the divergence matrix is the role-framed-minus-baseline delta on that item. This separates **standard bleed** (the role claim moves the model's response in an inappropriate direction) from **knowledge gap** (the model can't apply the standard regardless of who's asking). A response that scores low on the judge rubric *because the model never engages with §9.60(c) at all* — including in the no-claim baseline — is not bleed; it is knowledge gap, and the delta will register as ≈ 0. A response that scores adequately on the judge rubric in baseline but poorly under, e.g., the patient framing — is the bleed signal we are claiming to measure. This commitment is locked at scenario v1; analysis code in `code/icr/` will operationalize the delta computation per rubric item before any 6-role data collection.
 2. **Pairwise fidelity matrix**: per-role rubric-adherence scores, reported as a 6×6 heat map per model.
 3. **Failure type distribution**: breakdown of observed failures into standard bleed, role confusion, boundary violation, false authority, least-restrictive-option failure, and sycophancy. Grounded in a pre-registered failure taxonomy.
-4. **Directional asymmetry**: ICR computed for (i, j) and (j, i) separately; bleed is hypothesized to be non-symmetric (e.g., therapist → officer bleed may differ from officer → therapist bleed).
+4. **Directional asymmetry**: ICR computed for (i, j) and (j, i) separately; bleed is hypothesized to be non-symmetric (e.g., doctor → lawyer bleed may differ from lawyer → doctor bleed).
 
 ### 5.5 Disambiguation of κ and r across the paper
 
@@ -158,7 +158,7 @@ The subscripted labels are used in every figure, table, and numeric claim in the
 ### 5.6 Pilot empirical study scope (sprint Weeks 2–4)
 
 - **3 Kendra's Law scenario variants** (risk-level × treatment-history × complicating-factors variation).
-- **6 roles per scenario**: patient, loved one, therapist, officer, social worker, judge.
+- **6 roles per scenario**: patient, family, doctor, lawyer, social worker, judge.
 - **5 confirmed models** (with one conditional sixth slot subject to API access and budget): Claude Sonnet 4.6, Claude Haiku 4.5, GPT-4o, GPT-4o-mini, Llama 3.3 70B (via Groq). Sixth conditional addition: Gemini 2.5 Flash (requires Google AI Studio key) or one additional open-weight model.
 - **Per-role jury composition**: standing jury is Claude Sonnet 4.6 + Llama 3.1 8B; for the Claude Sonnet 4.6 target only, Judge A is swapped to Claude Opus 4.5 to avoid self-scoring. Documented.
 - **Validation subset**: 20 randomly selected (response × rubric item) pairs hand-scored by the author plus one collaborator; κ_human–judge computed.
@@ -193,7 +193,7 @@ The subscripted labels are used in every figure, table, and numeric claim in the
 ## 7. Limitations
 
 1. **Pilot scale**: the paper validates the methodology on one scenario family (Kendra's Law) in one jurisdiction. Generalization across scenarios, jurisdictions, and domains is Phase 2 work. Stated plainly in every empirical claim.
-2. **Rubric validity incomplete**: rubric items are drafted by the author with direct statute citations; full expert review across 3+ independent professionals is Phase 2. The paper claims only that items are *source-traceable*, not yet *expert-validated*. Specifically, clinical-domain rubrics (APA ethics, therapist role) inherit the psychometric lineage of Beidas/Creed/Flemotomos 2021–2025. Legal-domain rubrics (ABA Model Rules, judge/officer roles) and social-work rubrics (NASW Code, social-worker role) lack comparable peer-reviewed rubric-psychometric precedent — their construction is itself a methodological extension we claim, not inherit.
+2. **Rubric validity incomplete**: rubric items are drafted by the author with direct statute citations; full expert review across 3+ independent professionals is Phase 2. The paper claims only that items are *source-traceable*, not yet *expert-validated*. Specifically, clinical-domain rubrics (AMA Code of Medical Ethics, doctor role) inherit the psychometric lineage of Beidas/Creed/Flemotomos 2021–2025. Legal-domain rubrics (22 NYCRR Part 1200 + Part 100, lawyer/judge roles) and social-work rubrics (NASW Code, social-worker role) lack comparable peer-reviewed rubric-psychometric precedent — their construction is itself a methodological extension we claim, not inherit.
 3. **Statistical power for exploratory hypotheses**: MQ1/SQ1 are adequately powered; SQ2 and SQ3 interaction tests are explicitly framed as exploratory with effect sizes reported.
 4. **Judge bias**: LLM judges may share reasoning patterns with evaluated models. Mitigated by using judges from different providers and documented substitution. Layer 2 κ_human–judge is the primary check.
 5. **Single-turn**: real cross-system interactions unfold over multi-turn trajectories. Phase 2 work.

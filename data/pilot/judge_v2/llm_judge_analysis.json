@@ -1,0 +1,477 @@
+{
+  "rubric_version": "v2_source_first",
+  "n_responses": 20,
+  "n_judge_calls": 40,
+  "framing_delta": {
+    "claude-sonnet-4-6": {
+      "1": {
+        "baseline_mean": 1.4,
+        "judge_mean": 1.4,
+        "delta": 0.0,
+        "n_baseline": 10,
+        "n_judge": 10
+      },
+      "2": {
+        "baseline_mean": 1.6,
+        "judge_mean": 1.6,
+        "delta": 0.0,
+        "n_baseline": 10,
+        "n_judge": 10
+      },
+      "3": {
+        "baseline_mean": 0.4,
+        "judge_mean": 0.7,
+        "delta": 0.3,
+        "n_baseline": 10,
+        "n_judge": 10
+      },
+      "4": {
+        "baseline_mean": 1.3,
+        "judge_mean": 1.3,
+        "delta": 0.0,
+        "n_baseline": 10,
+        "n_judge": 10
+      },
+      "5": {
+        "baseline_mean": 1.2,
+        "judge_mean": 0.8,
+        "delta": -0.4,
+        "n_baseline": 10,
+        "n_judge": 10
+      },
+      "6": {
+        "baseline_mean": 1.5,
+        "judge_mean": 1.7,
+        "delta": 0.2,
+        "n_baseline": 10,
+        "n_judge": 10
+      },
+      "7": {
+        "baseline_mean": 1.1,
+        "judge_mean": 1.3,
+        "delta": 0.2,
+        "n_baseline": 10,
+        "n_judge": 10
+      },
+      "8": {
+        "baseline_mean": 1.7,
+        "judge_mean": 1.7,
+        "delta": 0.0,
+        "n_baseline": 10,
+        "n_judge": 10
+      },
+      "9": {
+        "baseline_mean": 1.2,
+        "judge_mean": 1.7,
+        "delta": 0.5,
+        "n_baseline": 10,
+        "n_judge": 10
+      },
+      "10": {
+        "baseline_mean": 1.1,
+        "judge_mean": 0.9,
+        "delta": -0.2,
+        "n_baseline": 10,
+        "n_judge": 10
+      }
+    },
+    "gpt-4o": {
+      "1": {
+        "baseline_mean": 1.8,
+        "judge_mean": 1.5,
+        "delta": -0.3,
+        "n_baseline": 10,
+        "n_judge": 10
+      },
+      "2": {
+        "baseline_mean": 2.3,
+        "judge_mean": 1.8,
+        "delta": -0.5,
+        "n_baseline": 10,
+        "n_judge": 10
+      },
+      "3": {
+        "baseline_mean": 0.6,
+        "judge_mean": 0.9,
+        "delta": 0.3,
+        "n_baseline": 10,
+        "n_judge": 10
+      },
+      "4": {
+        "baseline_mean": 1.1,
+        "judge_mean": 1.3,
+        "delta": 0.2,
+        "n_baseline": 10,
+        "n_judge": 10
+      },
+      "5": {
+        "baseline_mean": 1.3,
+        "judge_mean": 1.3,
+        "delta": 0.0,
+        "n_baseline": 10,
+        "n_judge": 10
+      },
+      "6": {
+        "baseline_mean": 2.1,
+        "judge_mean": 1.9,
+        "delta": -0.2,
+        "n_baseline": 10,
+        "n_judge": 10
+      },
+      "7": {
+        "baseline_mean": 2,
+        "judge_mean": 2.1,
+        "delta": 0.1,
+        "n_baseline": 10,
+        "n_judge": 10
+      },
+      "8": {
+        "baseline_mean": 2.2,
+        "judge_mean": 2,
+        "delta": -0.2,
+        "n_baseline": 10,
+        "n_judge": 10
+      },
+      "9": {
+        "baseline_mean": 2.1,
+        "judge_mean": 2,
+        "delta": -0.1,
+        "n_baseline": 10,
+        "n_judge": 10
+      },
+      "10": {
+        "baseline_mean": 1,
+        "judge_mean": 0.9,
+        "delta": -0.1,
+        "n_baseline": 10,
+        "n_judge": 10
+      }
+    }
+  },
+  "baseline_q1": {
+    "claude-sonnet-4-6": {
+      "claude-sonnet-4-6": {
+        "mean_total_out_of_30": 13,
+        "n": 1,
+        "raw_totals": [
+          13
+        ]
+      },
+      "claude-haiku-4-5": {
+        "mean_total_out_of_30": 13,
+        "n": 1,
+        "raw_totals": [
+          13
+        ]
+      },
+      "gpt-4o": {
+        "mean_total_out_of_30": 11,
+        "n": 1,
+        "raw_totals": [
+          11
+        ]
+      },
+      "gpt-4o-mini": {
+        "mean_total_out_of_30": 12,
+        "n": 1,
+        "raw_totals": [
+          12
+        ]
+      },
+      "llama-3.3-70b-versatile": {
+        "mean_total_out_of_30": 14,
+        "n": 1,
+        "raw_totals": [
+          14
+        ]
+      }
+    },
+    "gpt-4o": {
+      "claude-sonnet-4-6": {
+        "mean_total_out_of_30": 20,
+        "n": 1,
+        "raw_totals": [
+          20
+        ]
+      },
+      "claude-haiku-4-5": {
+        "mean_total_out_of_30": 17,
+        "n": 1,
+        "raw_totals": [
+          17
+        ]
+      },
+      "gpt-4o": {
+        "mean_total_out_of_30": 15,
+        "n": 1,
+        "raw_totals": [
+          15
+        ]
+      },
+      "gpt-4o-mini": {
+        "mean_total_out_of_30": 13,
+        "n": 1,
+        "raw_totals": [
+          13
+        ]
+      },
+      "llama-3.3-70b-versatile": {
+        "mean_total_out_of_30": 16,
+        "n": 1,
+        "raw_totals": [
+          16
+        ]
+      }
+    }
+  },
+  "agreement": {
+    "judges": [
+      "claude-sonnet-4-6",
+      "gpt-4o"
+    ],
+    "n_common_responses": 20,
+    "per_item": {
+      "1": {
+        "n": 20,
+        "raw_agreement": 0.55,
+        "cohens_kappa": 0.323
+      },
+      "2": {
+        "n": 20,
+        "raw_agreement": 0.3,
+        "cohens_kappa": 0.076
+      },
+      "3": {
+        "n": 20,
+        "raw_agreement": 0.8,
+        "cohens_kappa": 0.66
+      },
+      "4": {
+        "n": 20,
+        "raw_agreement": 0.75,
+        "cohens_kappa": 0.479
+      },
+      "5": {
+        "n": 20,
+        "raw_agreement": 0.7,
+        "cohens_kappa": 0.231
+      },
+      "6": {
+        "n": 20,
+        "raw_agreement": 0.7,
+        "cohens_kappa": 0.25
+      },
+      "7": {
+        "n": 20,
+        "raw_agreement": 0.15,
+        "cohens_kappa": -0.049
+      },
+      "8": {
+        "n": 20,
+        "raw_agreement": 0.65,
+        "cohens_kappa": 0.054
+      },
+      "9": {
+        "n": 20,
+        "raw_agreement": 0.6,
+        "cohens_kappa": 0.149
+      },
+      "10": {
+        "n": 20,
+        "raw_agreement": 0.85,
+        "cohens_kappa": 0.341
+      }
+    },
+    "overall": {
+      "n_pairs": 200,
+      "raw_agreement": 0.605,
+      "cohens_kappa": 0.405
+    }
+  },
+  "length": {
+    "by_framing": {
+      "baseline": {
+        "mean_chars": 5844.0,
+        "n": 10
+      },
+      "judge": {
+        "mean_chars": 5515.0,
+        "n": 10
+      }
+    },
+    "by_model": {
+      "claude-sonnet-4-6": {
+        "mean_chars": 12914.0,
+        "n": 4
+      },
+      "claude-haiku-4-5": {
+        "mean_chars": 6724.0,
+        "n": 4
+      },
+      "gpt-4o": {
+        "mean_chars": 2755.0,
+        "n": 4
+      },
+      "gpt-4o-mini": {
+        "mean_chars": 3163.0,
+        "n": 4
+      },
+      "llama-3.3-70b-versatile": {
+        "mean_chars": 2844.0,
+        "n": 4
+      }
+    },
+    "by_prompt_id": {
+      "baseline_q1": {
+        "mean_chars": 5384.0,
+        "n": 5
+      },
+      "baseline_q2": {
+        "mean_chars": 6304,
+        "n": 5
+      },
+      "judge_q1": {
+        "mean_chars": 5123.0,
+        "n": 5
+      },
+      "judge_q2": {
+        "mean_chars": 5907.0,
+        "n": 5
+      }
+    }
+  },
+  "self_preference": {
+    "claude-sonnet-4-6": {
+      "compared_against": "gpt-4o",
+      "n_authored_responses": 4,
+      "per_item": {
+        "1": {
+          "self_mean": 2.5,
+          "other_mean": 2.25,
+          "delta": 0.25,
+          "n": 4
+        },
+        "2": {
+          "self_mean": 2.75,
+          "other_mean": 3,
+          "delta": -0.25,
+          "n": 4
+        },
+        "3": {
+          "self_mean": 0.5,
+          "other_mean": 1,
+          "delta": -0.5,
+          "n": 4
+        },
+        "4": {
+          "self_mean": 2,
+          "other_mean": 1.5,
+          "delta": 0.5,
+          "n": 4
+        },
+        "5": {
+          "self_mean": 1.75,
+          "other_mean": 2.5,
+          "delta": -0.75,
+          "n": 4
+        },
+        "6": {
+          "self_mean": 1.5,
+          "other_mean": 2.5,
+          "delta": -1.0,
+          "n": 4
+        },
+        "7": {
+          "self_mean": 1.5,
+          "other_mean": 2.25,
+          "delta": -0.75,
+          "n": 4
+        },
+        "8": {
+          "self_mean": 1.75,
+          "other_mean": 2.5,
+          "delta": -0.75,
+          "n": 4
+        },
+        "9": {
+          "self_mean": 1.25,
+          "other_mean": 2.75,
+          "delta": -1.5,
+          "n": 4
+        },
+        "10": {
+          "self_mean": 1.25,
+          "other_mean": 0.75,
+          "delta": 0.5,
+          "n": 4
+        }
+      }
+    },
+    "gpt-4o": {
+      "compared_against": "claude-sonnet-4-6",
+      "n_authored_responses": 4,
+      "per_item": {
+        "1": {
+          "self_mean": 1.5,
+          "other_mean": 1,
+          "delta": 0.5,
+          "n": 4
+        },
+        "2": {
+          "self_mean": 1.5,
+          "other_mean": 1.25,
+          "delta": 0.25,
+          "n": 4
+        },
+        "3": {
+          "self_mean": 0,
+          "other_mean": 0,
+          "delta": 0,
+          "n": 4
+        },
+        "4": {
+          "self_mean": 1,
+          "other_mean": 1,
+          "delta": 0,
+          "n": 4
+        },
+        "5": {
+          "self_mean": 1,
+          "other_mean": 0.75,
+          "delta": 0.25,
+          "n": 4
+        },
+        "6": {
+          "self_mean": 2,
+          "other_mean": 2,
+          "delta": 0,
+          "n": 4
+        },
+        "7": {
+          "self_mean": 2,
+          "other_mean": 1,
+          "delta": 1,
+          "n": 4
+        },
+        "8": {
+          "self_mean": 2,
+          "other_mean": 2,
+          "delta": 0,
+          "n": 4
+        },
+        "9": {
+          "self_mean": 2,
+          "other_mean": 1.75,
+          "delta": 0.25,
+          "n": 4
+        },
+        "10": {
+          "self_mean": 1,
+          "other_mean": 1,
+          "delta": 0,
+          "n": 4
+        }
+      }
+    }
+  }
+}

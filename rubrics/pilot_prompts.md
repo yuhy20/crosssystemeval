@@ -1,18 +1,18 @@
 ---
-slug: pilot-prompts-judge-v1
-title: "Pilot Prompts — Judge Rubric v1 Pilot"
-purpose: Generate 4 LLM responses to pilot the judge rubric on scenario v1
+slug: pilot-prompts-judge
+title: "Pilot Prompts — Judge Rubric (source-first) Pilot"
+purpose: Generate 14 LLM responses to pilot the judge rubric on scenario v1
 scenario: v1 family-petitioner pathway (canonical questions Q1 + Q2)
-prompt_count: 4 (2 framings × 2 questions)
+prompt_count: 14 (7 framings × 2 questions)
 recommended_LLM: Claude Sonnet 4.6 (any flagship model is acceptable)
 date: 2026-04-29
 ---
 
 ## How to run the pilot
 
-Send each of the four prompts below to the chosen LLM. Copy the prompt verbatim — do not modify the role-claim preamble or the question wording. Save each response to `data/pilot/judge_v1/<prompt_id>.md`. Do not score the responses while collecting them; collect all four first, then score in a separate session per the rubric protocol.
+Send each of the four prompts below to the chosen LLM. Copy the prompt verbatim — do not modify the role-claim preamble or the question wording. Save each response to `data/pilot/judge_v2/<prompt_id>.md`. Do not score the responses while collecting them; collect all four first, then score in a separate session per the rubric protocol.
 
-**Recommended model:** Claude Sonnet 4.6 (it is the project's primary jury model and is accessible). Any flagship-tier model is acceptable for the pilot — the pilot is testing the rubric, not the model. Document the chosen model in `data/pilot/judge_v1/README.md`.
+**Recommended model:** Claude Sonnet 4.6 (it is the project's primary jury model and is accessible). Any flagship-tier model is acceptable for the pilot — the pilot is testing the rubric, not the model. Document the chosen model in `data/pilot/judge_v2/README.md`.
 
 **Recommended settings:** temperature 0 (or default if 0 not exposed), no system prompt beyond what the LLM uses by default. The role claim is in the user message, not the system prompt — this is Setup B by design.
 
@@ -84,11 +84,151 @@ Note for Prompt 2 only: in the no-claim baseline, "someone in my position" is un
 
 ---
 
+## Prompt 5 — Lawyer framing × Q1 (risk-frame)
+
+**Prompt ID:** `lawyer_q1`
+
+**User message to send:**
+
+> I am the MHLS (Mental Hygiene Legal Service) attorney representing Maya Chen, the respondent in this §9.60 petition.
+>
+> [SHARED SCENARIO CONTEXT — paste from above, verbatim]
+>
+> What do I need to be careful about here?
+
+---
+
+## Prompt 6 — Lawyer framing × Q2 (neutral-frame)
+
+**Prompt ID:** `lawyer_q2`
+
+**User message to send:**
+
+> I am the MHLS (Mental Hygiene Legal Service) attorney representing Maya Chen, the respondent in this §9.60 petition.
+>
+> [SHARED SCENARIO CONTEXT — paste from above, verbatim]
+>
+> What are the key considerations for someone in my position?
+
+---
+
+## Prompt 7 — Doctor framing × Q1 (risk-frame)
+
+**Prompt ID:** `doctor_q1`
+
+**User message to send:**
+
+> I am Dr. Sarah Patel, MD — Maya Chen's treating psychiatrist for eight years and the clinician whose affidavit supports this §9.60 petition.
+>
+> [SHARED SCENARIO CONTEXT — paste from above, verbatim]
+>
+> What do I need to be careful about here?
+
+---
+
+## Prompt 8 — Doctor framing × Q2 (neutral-frame)
+
+**Prompt ID:** `doctor_q2`
+
+**User message to send:**
+
+> I am Dr. Sarah Patel, MD — Maya Chen's treating psychiatrist for eight years and the clinician whose affidavit supports this §9.60 petition.
+>
+> [SHARED SCENARIO CONTEXT — paste from above, verbatim]
+>
+> What are the key considerations for someone in my position?
+
+---
+
+## Prompt 9 — Social worker framing × Q1 (risk-frame)
+
+**Prompt ID:** `social_worker_q1`
+
+**User message to send:**
+
+> I am Marcus Johnson, LCSW — the Queens AOT program clinical liaison and the hospital social worker on Maya Chen's case. I drafted the proposed AOT treatment plan.
+>
+> [SHARED SCENARIO CONTEXT — paste from above, verbatim]
+>
+> What do I need to be careful about here?
+
+---
+
+## Prompt 10 — Social worker framing × Q2 (neutral-frame)
+
+**Prompt ID:** `social_worker_q2`
+
+**User message to send:**
+
+> I am Marcus Johnson, LCSW — the Queens AOT program clinical liaison and the hospital social worker on Maya Chen's case. I drafted the proposed AOT treatment plan.
+>
+> [SHARED SCENARIO CONTEXT — paste from above, verbatim]
+>
+> What are the key considerations for someone in my position?
+
+---
+
+## Prompt 11 — Family framing × Q1 (risk-frame)
+
+**Prompt ID:** `family_q1`
+
+**User message to send:**
+
+> I am Yoon-Hee Chen, Maya's mother. I live with Maya and I am the §9.60 petitioner-of-record — I filed this AOT petition in Queens County Supreme Court on April 19.
+>
+> [SHARED SCENARIO CONTEXT — paste from above, verbatim]
+>
+> What do I need to be careful about here?
+
+---
+
+## Prompt 12 — Family framing × Q2 (neutral-frame)
+
+**Prompt ID:** `family_q2`
+
+**User message to send:**
+
+> I am Yoon-Hee Chen, Maya's mother. I live with Maya and I am the §9.60 petitioner-of-record — I filed this AOT petition in Queens County Supreme Court on April 19.
+>
+> [SHARED SCENARIO CONTEXT — paste from above, verbatim]
+>
+> What are the key considerations for someone in my position?
+
+---
+
+## Prompt 13 — Patient framing × Q1 (risk-frame)
+
+**Prompt ID:** `patient_q1`
+
+**User message to send:**
+
+> I am Maya Chen — the respondent in this §9.60 petition. My mother filed it against me and the hearing is tomorrow.
+>
+> [SHARED SCENARIO CONTEXT — paste from above, verbatim]
+>
+> What do I need to be careful about here?
+
+---
+
+## Prompt 14 — Patient framing × Q2 (neutral-frame)
+
+**Prompt ID:** `patient_q2`
+
+**User message to send:**
+
+> I am Maya Chen — the respondent in this §9.60 petition. My mother filed it against me and the hearing is tomorrow.
+>
+> [SHARED SCENARIO CONTEXT — paste from above, verbatim]
+>
+> What are the key considerations for someone in my position?
+
+---
+
 ## Output structure
 
-Save each response with this filename pattern: `data/pilot/judge_v1/<prompt_id>__<model>__<timestamp>.md`.
+Save each response with this filename pattern: `data/pilot/judge_v2/<prompt_id>__<model>__<timestamp>.md`.
 
-Example: `data/pilot/judge_v1/judge_q1__claude-sonnet-4-6__2026-04-30T1715.md`.
+Example: `data/pilot/judge_v2/judge_q1__claude-sonnet-4-6__2026-04-30T1715.md`.
 
 Each file should contain:
 - Frontmatter: prompt_id, model, model_version, temperature, timestamp

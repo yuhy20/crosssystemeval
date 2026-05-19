@@ -190,7 +190,7 @@ export default function HomePage() {
               <code className="text-ink">llama-3.3-70b-versatile</code> (Groq)
               from the same <code className="text-ink">.env</code>. 12 cells
               (3 models × 4 prompts) generated reproducibly to{" "}
-              <code className="text-ink">data/pilot/judge_v1/responses.jsonl</code>{" "}
+              <code className="text-ink">data/pilot/judge_v2/responses.jsonl</code>{" "}
               with full metadata.
             </p>
           </SoftCard>

@@ -51,3 +51,6 @@ data/TRIDENT/
 
 # CrossSystemEval pilot data is committed (it's part of the artifact trail);
 # anything else under data/ stays out by default.
+
+# TypeScript incremental build cache
+*.tsbuildinfo

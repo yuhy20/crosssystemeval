@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { LinkCard, SoftCard, Stat } from "@/components/Card";
 import { Page, PageHeader, Section } from "@/components/Container";
 import Markdown from "@/components/Markdown";
@@ -10,16 +12,16 @@ export default function PilotPage() {
   return (
     <Page>
       <PageHeader
-        eyebrow="Validation Stack · Layer 2 prep · Judge Rubric v1"
+        eyebrow="Validation Stack · Layer 2 prep · Judge Rubric (source-first)"
         title="Rubric pilot — judge framing"
-        description="Pilot of the judge rubric (10 items, 0–3 anchored Likert) on scenario v1, run across 3 cross-family models × 4 prompts (baseline / judge × Q1 risk-frame / Q2 neutral-frame). The pilot tests the rubric design — item-correlation matrix, intra-rater κ, and baseline-vs-judge-framed delta — before scaling to the remaining five roles. Hand-scored across two sessions ≥24h apart, blind to prompt-id at session level."
+        description="Pilot of the judge rubric (10 items, 0–3 anchored Likert) on scenario v1, run across 5 models (3 families, with within-family scale variation) × 4 prompts (baseline / judge × Q1 risk-frame / Q2 neutral-frame). The pilot tests the rubric design — item-correlation matrix, intra-rater κ, and baseline-vs-judge-framed delta — before scaling to the remaining five roles. Two scoring layers: anchored hand-scoring (≥24h apart) and a parallel LLM-as-judge layer (2 cross-family judges) for directional pilot signal while expert scoring is in flight."
       />
 
       <Section>
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 animate-fade-up-delay-1">
-          <Stat label="Models" value="3" hint="Claude · GPT · Llama" />
+          <Stat label="Models" value="5" hint="3 families · 2 scale pairs" />
           <Stat label="Prompts" value="4" hint="2 framings × 2 questions" />
-          <Stat label="Cells" value={String(totalCells)} hint="all completed naturally" />
+          <Stat label="Cells" value={String(totalCells)} hint="5 × 4 expected" />
           <Stat label="Items" value="10" hint="7 role-appropriate · 3 bleed" />
         </div>
       </Section>
@@ -32,7 +34,7 @@ export default function PilotPage() {
               (session-1 shuffle). Read the response, then score every item
               0–3 in the local markdown sheet at{" "}
               <code className="rounded bg-surface-muted px-1.5 py-0.5 text-[12.5px] text-ink">
-                data/pilot/judge_v1/scoring_session_1/response_NN.md
+                data/pilot/judge_v2/scoring_session_1/response_NN.md
               </code>
               .
             </li>
@@ -62,6 +64,35 @@ export default function PilotPage() {
         </SoftCard>
       </Section>
 
+      <Section title="LLM-as-judge layer (parallel)">
+        <Link
+          href="/pilot/llm-judge"
+          className="block animate-fade-up-delay-2"
+        >
+          <SoftCard className="transition-colors hover:bg-surface-elevated">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <div className="mb-1 text-[12px] font-semibold uppercase tracking-[0.08em] text-accent">
+                  Directional pilot signal · not validated ICR
+                </div>
+                <div className="text-[15.5px] font-medium text-ink">
+                  Two cross-family judges score the 20 responses
+                </div>
+                <p className="mt-1 max-w-prose text-[13.5px] leading-relaxed text-ink-secondary">
+                  Framing delta · cross-model baseline-default pattern ·
+                  inter-judge agreement · length confound · self-preference
+                  floor. Caveats banner at the top of the analysis page.
+                </p>
+              </div>
+              <ArrowRight
+                className="h-5 w-5 shrink-0 text-ink-muted"
+                strokeWidth={2}
+              />
+            </div>
+          </SoftCard>
+        </Link>
+      </Section>
+
       <Section title={`Responses (${totalCells} · session-1 shuffle)`}>
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 animate-fade-up-delay-3">
           {data.responses.map((r) => (
@@ -86,7 +117,7 @@ export default function PilotPage() {
         </SoftCard>
       </Section>
 
-      <Section title="Rubric — Judge v1 (10 items, 0–3 anchored)">
+      <Section title="Rubric — Judge (source-first, 10 items, 0–3 anchored)">
         <SoftCard className="animate-fade-up-delay-3">
           <Markdown>{data.rubricMarkdown}</Markdown>
         </SoftCard>

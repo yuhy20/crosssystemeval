@@ -12,6 +12,7 @@ import {
   ListChecks,
   Mail,
   Network,
+  Presentation,
 } from "lucide-react";
 
 const nav = [
@@ -22,6 +23,7 @@ const nav = [
   { href: "/trident", label: "TRIDENT Calibration", icon: FlaskConical },
   { href: "/pilot", label: "Rubric Pilot", icon: ClipboardList },
   { href: "/outreach", label: "Outreach", icon: Mail },
+  { href: "/slides", label: "Slides", icon: Presentation },
 ];
 
 export default function Sidebar() {
